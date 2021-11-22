@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>okhttp3单独使用 | Hexo</title><meta name="keywords" content="Android"><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="最近使用了okhttp3 + mvvm的架构框架，也了解了volley，httpclient，async-http等框架，这些框架之前有的使用过，比起okhttp3来说，okhttp3有各种自定义拦截器，这里介绍下okhttp的各种方法吧。 get请求 构造request时候，直接吧参数拼成name&#x3D;xx&amp;pwd&#x3D;xx这种表单格式放在?后面。  1request &#x3D; new Reques">
+<meta property="og:type" content="article">
+<meta property="og:title" content="okhttp3单独使用">
+<meta property="og:url" content="http://example.com/2021/05/10/okhttp3%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="最近使用了okhttp3 + mvvm的架构框架，也了解了volley，httpclient，async-http等框架，这些框架之前有的使用过，比起okhttp3来说，okhttp3有各种自定义拦截器，这里介绍下okhttp的各种方法吧。 get请求 构造request时候，直接吧参数拼成name&#x3D;xx&amp;pwd&#x3D;xx这种表单格式放在?后面。  1request &#x3D; new Reques">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-05-10T12:51:28.926Z">
+<meta property="article:modified_time" content="2021-10-29T09:09:14.410Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/05/10/okhttp3%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'okhttp3单独使用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-10-29 17:09:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">12</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Hexo</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">okhttp3单独使用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-10T12:51:28.926Z" title="Created 2021-05-10 20:51:28">2021-05-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-10-29T09:09:14.410Z" title="Updated 2021-10-29 17:09:14">2021-10-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="okhttp3单独使用"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p> 最近使用了okhttp3 + mvvm的架构框架，也了解了volley，httpclient，async-http等框架，这些框架之前有的使用过，比起okhttp3来说，okhttp3有各种自定义拦截器，这里介绍下okhttp的各种方法吧。</p>
+<h2 id="get请求"><a href="#get请求" class="headerlink" title="get请求"></a>get请求</h2><blockquote>
+<p>构造request时候，直接吧参数拼成name=xx&amp;pwd=xx这种表单格式放在?后面。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request = new Request.Builder().url(API.baseurl + url + &quot;?&quot; + stringJson).header(&quot;ACCESS_TOKEN&quot;, Utils.getToken(activity)).build();</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="post请求"><a href="#post请求" class="headerlink" title="post请求"></a>post请求</h2><blockquote>
+<p>requestbody.create(stringjson,JSON)，stringjson是json格式的请求参数，后面的JSON是互联网媒体类型。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if (stringJson == null) &#123;</span><br><span class="line">	body = RequestBody.create(&quot;&quot;, JSON);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	body = RequestBody.create(stringJson, JSON);</span><br><span class="line">&#125;</span><br><span class="line">request = new Request.Builder().url(API.baseurl + url).post(body).header(&quot;ACCESS_TOKEN&quot;, Utils.getToken(activity)).build();</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="上传媒体类型"><a href="#上传媒体类型" class="headerlink" title="上传媒体类型"></a>上传媒体类型</h2><blockquote>
+<p>也叫做MIME类型，在Http协议消息头中，使用Content-Type来表示。具体请求中的媒体类型信息。用于定义网络文件的类型和网页的编码，决定文件接收方将以什么形式、什么编码读取这个文件。</p>
+</blockquote>
+<p> text/html：HTML格式</p>
+<p> text/pain：纯文本格式</p>
+<p> image/jpeg：jpg图片格式</p>
+<p> application/json：JSON数据格式</p>
+<p> application/octet-stream：二进制流数据（如常见的文件下载）</p>
+<p> application/x-www-form-urlencoded：form表单encType属性的默认格式，表单数据将以key/value的形式发送到服务端</p>
+<p> multipart/form-data：表单上传文件的格式</p>
+<h2 id="请求返回"><a href="#请求返回" class="headerlink" title="请求返回"></a>请求返回</h2><blockquote>
+<p>异步返回</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">enqueue client.newCall(request).enqueue(new Callback() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onFailure(Call call, IOException e) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">            @Override</span><br><span class="line">            public void onResponse(Call call, Response response) throws IOException &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="自定义拦截器"><a href="#自定义拦截器" class="headerlink" title="自定义拦截器"></a>自定义拦截器</h2><blockquote>
+<p>初始化okhttpclient并设置默认信任所有证书，添加拦截器，为了不断更新token加在请求头给服务端，所以我的初始化代码是这样写的.</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">private OkHttpClient okhttpclient(Activity activity) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            if (client == null) &#123;</span><br><span class="line">                client = new OkHttpClient.Builder().</span><br><span class="line">                        sslSocketFactory(createSSLSocketFactory(), new TrustAllCerts())</span><br><span class="line">                        .hostnameVerifier(new TrustAllHostnameVerifier()).addInterceptor(interceptor(activity))</span><br><span class="line">                        .build();</span><br><span class="line">            &#125;</span><br><span class="line">            return client;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            Utils.log(&quot;&quot;, &quot;&quot;, &quot;okhttp https连接问题&quot;);</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>拦截器就是为了拿到服务端response里面的token和打印各种请求和返回，代码如下：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">public class HttpLogInterceptor implements Interceptor &#123;</span><br><span class="line">    //    private static final String TAG = HttpLogInterceptor.class.getSimpleName();</span><br><span class="line">    private final Charset UTF8 = Charset.forName(&quot;UTF-8&quot;);</span><br><span class="line">    private Activity activity;</span><br><span class="line">    public HttpLogInterceptor(Activity activity) &#123;</span><br><span class="line">        this.activity = activity;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public Response intercept(Chain chain) throws IOException &#123;</span><br><span class="line">        Request request = chain.request();</span><br><span class="line">        RequestBody requestBody = request.body();</span><br><span class="line">        String body = null;</span><br><span class="line">        if (requestBody != null) &#123;</span><br><span class="line">            Buffer buffer = new Buffer();</span><br><span class="line">            requestBody.writeTo(buffer);</span><br><span class="line">            Charset charset = UTF8;</span><br><span class="line">            MediaType contentType = requestBody.contentType();</span><br><span class="line">            if (contentType != null) &#123;</span><br><span class="line">                charset = contentType.charset(UTF8);</span><br><span class="line">            &#125;</span><br><span class="line">            body = buffer.readString(charset);</span><br><span class="line">        &#125;</span><br><span class="line">        Log.d(&quot;xuedi&quot;, &quot;发送请求: method：&quot; + request.method()</span><br><span class="line">                + &quot;\nurl：&quot; + request.url()</span><br><span class="line">                + &quot;\n请求头：&quot; + request.headers()</span><br><span class="line">                + &quot;\n请求参数: &quot; + body);</span><br><span class="line">        long startNs = System.nanoTime();</span><br><span class="line">        Response response = chain.proceed(request);</span><br><span class="line">        long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);</span><br><span class="line">        if (response.header(&quot;ACCESS_TOKEN&quot;)!=null) &#123;</span><br><span class="line">            UserLogin.getInstance().setToken(response.header(&quot;ACCESS_TOKEN&quot;));</span><br><span class="line">            SharePref.put(activity, API.token, response.header(&quot;ACCESS_TOKEN&quot;));</span><br><span class="line">        &#125;</span><br><span class="line">        ResponseBody responseBody = response.body();</span><br><span class="line">        String rBody;</span><br><span class="line">        BufferedSource source = responseBody.source();</span><br><span class="line">        source.request(Long.MAX_VALUE);</span><br><span class="line">        Buffer buffer = source.buffer();</span><br><span class="line">        Charset charset = UTF8;</span><br><span class="line">        MediaType contentType = responseBody.contentType();</span><br><span class="line">        if (contentType != null) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                charset = contentType.charset(UTF8);</span><br><span class="line">            &#125; catch (UnsupportedCharsetException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        rBody = buffer.clone().readString(charset);</span><br><span class="line">        Log.d(&quot;xuedi&quot;, &quot;收到: method：&quot; + request.method()+</span><br><span class="line">                &quot;\n响应header：&quot;+response.header(&quot;ACCESS_TOKEN&quot;)</span><br><span class="line">                +&quot;\n响应url:&quot;+response.request().url()</span><br><span class="line">                + &quot;\n响应body: &quot; + rBody);</span><br><span class="line">        return response;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里面就是重写的intercept(Chain chain),chain.request和chain.response拿到就可以打印了，这是Chain接口方法：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public interface Chain &#123;</span><br><span class="line">public abstract fun call(): okhttp3.Call</span><br><span class="line">public abstract fun connectTimeoutMillis(): kotlin.Int</span><br><span class="line">public abstract fun connection(): okhttp3.Connection?</span><br><span class="line">public abstract fun proceed(request: okhttp3.Request): okhttp3.Response</span><br><span class="line">public abstract fun readTimeoutMillis(): kotlin.Int</span><br><span class="line">public abstract fun request(): okhttp3.Request</span><br><span class="line">public abstract fun withConnectTimeout(timeout: kotlin.Int, unit: java.util.concurrent.TimeUnit): okhttp3.Interceptor.Chain</span><br><span class="line">public abstract fun withReadTimeout(timeout: kotlin.Int, unit: java.util.concurrent.TimeUnit): okhttp3.Interceptor.Chain</span><br><span class="line">public abstract fun withWriteTimeout(timeout: kotlin.Int, unit: java.util.concurrent.TimeUnit): okhttp3.Interceptor.Chain</span><br><span class="line">public abstract fun writeTimeoutMillis(): kotlin.Int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>拿到保存在本地，然后返回给服务端，这就是一次完整的请求。当然还有多类型上传，formbody上传等等。官方文档：</p>
+<p><a target="_blank" rel="noopener" href="https://square.github.io/okhttp">https://square.github.io/okhttp</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">John Doe</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/05/10/okhttp3%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8/">http://example.com/2021/05/10/okhttp3%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/05/11/Android%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">面向对象6大原则---Android源码设计模式</div></div></a></div><div class="next-post pull-right"><a href="/2017/03/18/hexo-theme-beantech/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">[Hexo] Theme BeanTech</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/05/12/%E4%BB%8ELayoutInflater-from-context-%E7%9C%8B%E6%BA%90%E7%A0%81/" title=""><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-12</div><div class="title"></div></div></a></div><div><a href="/2021/05/12/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="Android源码中的单例模式----Android源码设计模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-12</div><div class="title">Android源码中的单例模式----Android源码设计模式</div></div></a></div><div><a href="/2021/10/29/%E4%B8%8A%E4%BC%A0module%E5%88%B0jitpack.io/" title="上传module到jitpack.io"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-29</div><div class="title">上传module到jitpack.io</div></div></a></div><div><a href="/2021/05/11/Android%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/" title="面向对象6大原则---Android源码设计模式"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-11</div><div class="title">面向对象6大原则---Android源码设计模式</div></div></a></div><div><a href="/2021/11/18/jetpack%E7%B3%BB%E5%88%97-lifecycle/" title="jetpack系列-lifecycle"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-18</div><div class="title">jetpack系列-lifecycle</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">John Doe</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">12</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#get%E8%AF%B7%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">get请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#post%E8%AF%B7%E6%B1%82"><span class="toc-number">2.</span> <span class="toc-text">post请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">上传媒体类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9E"><span class="toc-number">4.</span> <span class="toc-text">请求返回</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="toc-number">5.</span> <span class="toc-text">自定义拦截器</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/11/21/hexo-github%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/" title="hexo+github打造个人网站"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hexo+github打造个人网站"/></a><div class="content"><a class="title" href="/2021/11/21/hexo-github%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/" title="hexo+github打造个人网站">hexo+github打造个人网站</a><time datetime="2021-11-21T13:57:38.000Z" title="Created 2021-11-21 21:57:38">2021-11-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/18/jetpack%E7%B3%BB%E5%88%97-lifecycle/" title="jetpack系列-lifecycle"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="jetpack系列-lifecycle"/></a><div class="content"><a class="title" href="/2021/11/18/jetpack%E7%B3%BB%E5%88%97-lifecycle/" title="jetpack系列-lifecycle">jetpack系列-lifecycle</a><time datetime="2021-11-18T08:03:02.791Z" title="Created 2021-11-18 16:03:02">2021-11-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/29/%E4%B8%8A%E4%BC%A0module%E5%88%B0jitpack.io/" title="上传module到jitpack.io"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="上传module到jitpack.io"/></a><div class="content"><a class="title" href="/2021/10/29/%E4%B8%8A%E4%BC%A0module%E5%88%B0jitpack.io/" title="上传module到jitpack.io">上传module到jitpack.io</a><time datetime="2021-10-29T08:59:42.132Z" title="Created 2021-10-29 16:59:42">2021-10-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/27/%E6%89%BE%E5%AF%B9%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E6%B3%95%E7%9A%84%E7%AC%AC%E4%B8%80%E6%9C%AC%E4%B9%A6/" title="找对英语学习法第一本书"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="找对英语学习法第一本书"/></a><div class="content"><a class="title" href="/2021/08/27/%E6%89%BE%E5%AF%B9%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E6%B3%95%E7%9A%84%E7%AC%AC%E4%B8%80%E6%9C%AC%E4%B9%A6/" title="找对英语学习法第一本书">找对英语学习法第一本书</a><time datetime="2021-08-26T21:03:58.765Z" title="Created 2021-08-27 05:03:58">2021-08-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/26/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/" title="英语学习建议"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="英语学习建议"/></a><div class="content"><a class="title" href="/2021/08/26/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/" title="英语学习建议">英语学习建议</a><time datetime="2021-08-25T16:52:25.174Z" title="Created 2021-08-26 00:52:25">2021-08-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By John Doe</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
