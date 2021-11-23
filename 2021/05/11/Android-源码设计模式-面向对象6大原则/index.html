@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Android-面向对象6大原则源码设计模式 | diwannaRunaway</title><meta name="keywords" content="Android"><meta name="author" content="diwannaRunaway"><meta name="copyright" content="diwannaRunaway"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="单一职责原则——优化代码第一步Single Responsibility Principle, SRP. 就一个类而言，应该仅有一个能引起他变化的原因。最重要的是，要能划分一个类具体的职责，2个完全不同的功能代码不能放在同一个类中，会引起类文件冗余庞大，后面的代码会越来越难以维护，这是优化代码第一步。例如我们去写一个缓存图片的功能。 ​    1、下载图片 2、缓存图片 在这里基础的用3个类文件去">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-面向对象6大原则源码设计模式">
+<meta property="og:url" content="http://example.com/2021/05/11/Android-%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/index.html">
+<meta property="og:site_name" content="diwannaRunaway">
+<meta property="og:description" content="单一职责原则——优化代码第一步Single Responsibility Principle, SRP. 就一个类而言，应该仅有一个能引起他变化的原因。最重要的是，要能划分一个类具体的职责，2个完全不同的功能代码不能放在同一个类中，会引起类文件冗余庞大，后面的代码会越来越难以维护，这是优化代码第一步。例如我们去写一个缓存图片的功能。 ​    1、下载图片 2、缓存图片 在这里基础的用3个类文件去">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://get.wallhere.com/photo/Joker-movie-Batman-1781187.jpg">
+<meta property="article:published_time" content="2021-05-10T22:43:25.145Z">
+<meta property="article:modified_time" content="2021-11-23T05:01:44.187Z">
+<meta property="article:author" content="diwannaRunaway">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://get.wallhere.com/photo/Joker-movie-Batman-1781187.jpg"><link rel="shortcut icon" href="/img/kucun.png"><link rel="canonical" href="http://example.com/2021/05/11/Android-%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Android-面向对象6大原则源码设计模式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-11-23 13:01:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/kucun.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">11</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://get.wallhere.com/photo/Joker-movie-Batman-1781187.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">diwannaRunaway</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Android-面向对象6大原则源码设计模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-05-10T22:43:25.145Z" title="Created 2021-05-11 06:43:25">2021-05-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-11-23T05:01:44.187Z" title="Updated 2021-11-23 13:01:44">2021-11-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Android-面向对象6大原则源码设计模式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="单一职责原则——优化代码第一步"><a href="#单一职责原则——优化代码第一步" class="headerlink" title="单一职责原则——优化代码第一步"></a>单一职责原则——优化代码第一步</h3><p>Single Responsibility Principle, SRP. 就一个类而言，应该仅有一个能引起他变化的原因。最重要的是，要能划分一个类具体的职责，2个完全不同的功能代码不能放在同一个类中，会引起类文件冗余庞大，后面的代码会越来越难以维护，这是优化代码第一步。例如我们去写一个缓存图片的功能。</p>
+<p>​    <code>1、下载图片</code> <code>2、缓存图片</code></p>
+<p>在这里基础的用3个类文件去写，download、cache、tools，写在一个文件就会显得特别的大，这样后续开发看着就头大，找代码就要找半天，写3个文件非常简洁，可以在把这三个文件放到一个package里面去。这样不管开发还是后续维护都很容易。</p>
+<h3 id="开闭原则——-让程序稳定和灵活"><a href="#开闭原则——-让程序稳定和灵活" class="headerlink" title="开闭原则——-让程序稳定和灵活"></a>开闭原则——-让程序稳定和灵活</h3><p>Open Close Principle，OCP。代码文件对于修改是封闭的，但对于扩展是开放的。也就是说，尽可能的不去修改原来旧文件，因为一旦修改，别的对象调用会出现问题，因为你不知道这个函数方法在哪里调用会被调用几次（总不能一直点击去查看吧，或者写很多个注释）。但是对象调用肯定会使用到当前类文件，为了满足后续需求，所以他的拓展性是要开放的，一般使用接口满足拓展性。</p>
+<h3 id="里氏替换原则—–构建拓展性更好的系统"><a href="#里氏替换原则—–构建拓展性更好的系统" class="headerlink" title="里氏替换原则—–构建拓展性更好的系统"></a>里氏替换原则—–构建拓展性更好的系统</h3><p>所有引用基类的地方必须能透明的使用其子类的对象。面向对象的三大特性：封装、继承、多态。里氏替换原则就是基于多态和继承，只要父类出现的地方子类就可以出现，而且替换为子类也不会有任何的错误和异常。其实就是一种抽象。看下面一个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Window window = <span class="keyword">new</span> Window();</span><br><span class="line">        window.show(<span class="keyword">new</span> Button());</span><br><span class="line">        window.show(<span class="keyword">new</span> TextView());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Window</span></span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">(View child)</span></span>&#123;</span><br><span class="line">            child.mesure();</span><br><span class="line">            child.draw();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//写一个抽象view,draw交给子类自己实现，mesure公用代码</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">View</span></span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mesure</span><span class="params">()</span></span>&#123;</span><br><span class="line">            print(<span class="string">&quot;view mesure&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//写一个Button</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Button</span> <span class="keyword">extends</span> <span class="title">View</span></span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            print(<span class="string">&quot;button draw&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//新建一个TextView文件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TextView</span> <span class="keyword">extends</span> <span class="title">View</span></span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            print(<span class="string">&quot;textview draw&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(String message)</span></span>&#123;</span><br><span class="line">        System.out.println(message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//执行结果</span></span><br><span class="line">view mesure</span><br><span class="line">button draw</span><br><span class="line">view mesure</span><br><span class="line">textview draw</span><br></pre></td></tr></table></figure>
+
+<p><em>可以仔细看看这段代码，Window中的show(View child),在这里传入的是View的子类Button和Textview对象。</em></p>
+<ul>
+<li><p>mesure()是子类调用父类方法，这是一个公共的方法，因为你不用每个view子类都自己去测量，在父View中共用一套代码执行就完毕。</p>
+</li>
+<li><p>draw()是子类方法，子类继承抽象父类必须实现的抽象方法，这里面每个View都有自己的绘制方法，所以需要每个子类都去自定义。</p>
+<p>这就是里氏替换原则，用的正是面向对象三大特性之二的继承和多态。继承是父类里面的共有方法，多态体现在任何使用基类的地方都可以创建其子类对象。</p>
+<p><em>里氏替换原理就是抽象，抽象又依赖继承这个特性，继承的优点</em></p>
+</li>
+<li><p>代码重用，减少创建类的成本，每个子类都有父类的属性和方法；</p>
+</li>
+<li><p>子类和父类相似，但和父类有区别；</p>
+</li>
+<li><p>提高代码的可扩展性</p>
+<p><em>继承的缺点</em></p>
+</li>
+<li><p>继承是侵入性的，只要继承就必须拥有父类的所有属性和方法；</p>
+</li>
+<li><p>可能造成子类的代码冗余，因为子类必须拥有父类的属性和方法；</p>
+</li>
+</ul>
+<h3 id="依赖倒置原则——让项目拥有变换的能力"><a href="#依赖倒置原则——让项目拥有变换的能力" class="headerlink" title="依赖倒置原则——让项目拥有变换的能力"></a>依赖倒置原则——让项目拥有变换的能力</h3><p>依赖倒置原则是一种特定的解藕形式，使得高层次模块不依赖于低层次模块的实现细节，依赖模块被颠倒了。</p>
+<p>1、高层模块不应该依赖底层模块，两者都应该依赖其抽象；</p>
+<p>2、抽象不应该依赖细节；</p>
+<p>3、细节应该依赖抽象；</p>
+<blockquote>
+<p>在java中，抽象就是指的接口或者抽象类，两者都是不能背实例化的；细节就是实现类，实现接口或者继承抽象类产生的类就是细节，是可以被实例化的。高层模块就是调用端，底层模块就是细节类。</p>
+</blockquote>
+<p><u>模块间的依赖通过抽象产生，实现类之间不发生直接的依赖关系，其依赖关系是通过接口或抽象类产生的，也就是面向接口或者面向抽象编程</u></p>
+<h3 id="接口隔离原则——-系统拥有更高的灵活度"><a href="#接口隔离原则——-系统拥有更高的灵活度" class="headerlink" title="接口隔离原则——-系统拥有更高的灵活度"></a>接口隔离原则——-系统拥有更高的灵活度</h3><p>ISP定义：客户端不应该依赖他不需要的接口，或者类之间的关系应该建立在最小的接口上。接口隔离的原则是让庞大冗余的接口拆分为更小、更加精细的接口，让接口尽可能的小。<em>这个在实际的引用场景还是常见的，如closeable.close()等</em>。</p>
+<p><em>单一职责、开闭原则、里氏替换、接口隔离和依赖倒置这5个原则常见于Android源码之中，其特点为：抽象、单一职责、最小化。也就是说，类之间的依赖关系应该基于抽象，单个类符合单一职责，单个类和方法也要最小化。</em></p>
+<h3 id="迪米特原则——更好的可扩展性"><a href="#迪米特原则——更好的可扩展性" class="headerlink" title="迪米特原则——更好的可扩展性"></a>迪米特原则——更好的可扩展性</h3><p>最少知识原则，一个对象对其他对象应该有最少的了解，一个类应该对和自己耦合的类知道的最少。</p>
+<blockquote>
+<p>这个实际应用也很广泛，多个文件相互通信时，不应该一股脑全部都写出来，而是确定一个方向，和当前类耦合度最低，调用的文件越少愈好。从mvp到mvvm不就是这样的设计模式🐎</p>
+</blockquote>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>应用实际开发中，最难的不是初始开发工作，而是后续的迭代和升级，越来越多的代码文件加入其中，类文件越来越臃肿时。这时候就是考验对这6大原则掌握的时候了，不管是重构还是新加入的文件，遵循这6大原则会让代码简介、清晰、灵活和稳定。所谓高内聚、低耦合和高扩展度就是如此。阅读Android源码设计模式第一步，就是必须对这些基本原理理解透彻。</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">diwannaRunaway</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/05/11/Android-%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/">http://example.com/2021/05/11/Android-%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a></div><div class="post_share"><div class="social-share" data-image="https://get.wallhere.com/photo/Joker-movie-Batman-1781187.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/05/12/Android-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"><img class="prev-cover" src="https://images5.alphacoders.com/556/556063.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Android-源码中的单例模式</div></div></a></div><div class="next-post pull-right"><a href="/2021/05/10/Android-okhttp3%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8/"><img class="next-cover" src="https://images4.alphacoders.com/828/8288.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Android-okhttp3单独使用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/11/18/Android-jetpack%E7%B3%BB%E5%88%97-lifecycle/" title="Android-jetpack系列-lifecycle"><img class="cover" src="https://get.wallhere.com/photo/1920x1080-px-Batman-Blo0p-DC-Comics-Joker-minimalism-simple-background-738833.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-18</div><div class="title">Android-jetpack系列-lifecycle</div></div></a></div><div><a href="/2021/10/29/Android-%E4%B8%8A%E4%BC%A0module%E5%88%B0jitpack.io/" title="Android-上传module到jitpack.io"><img class="cover" src="https://images5.alphacoders.com/556/556063.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-29</div><div class="title">Android-上传module到jitpack.io</div></div></a></div><div><a href="/2021/05/12/Android-%E4%BB%8ELayoutInflater-from-context-%E7%9C%8B%E6%BA%90%E7%A0%81/" title=""><img class="cover" src="https://images4.alphacoders.com/828/8288.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-12</div><div class="title"></div></div></a></div><div><a href="/2021/05/10/Android-okhttp3%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8/" title="Android-okhttp3单独使用"><img class="cover" src="https://images4.alphacoders.com/828/8288.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-10</div><div class="title">Android-okhttp3单独使用</div></div></a></div><div><a href="/2021/05/12/Android-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="Android-源码中的单例模式"><img class="cover" src="https://images5.alphacoders.com/556/556063.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-12</div><div class="title">Android-源码中的单例模式</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/kucun.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">diwannaRunaway</div><div class="author-info__description">running everyday</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">11</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/wannaRunaway"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99%E2%80%94%E2%80%94%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-number">1.</span> <span class="toc-text">单一职责原则——优化代码第一步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%E2%80%94%E2%80%94-%E8%AE%A9%E7%A8%8B%E5%BA%8F%E7%A8%B3%E5%AE%9A%E5%92%8C%E7%81%B5%E6%B4%BB"><span class="toc-number">2.</span> <span class="toc-text">开闭原则——-让程序稳定和灵活</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99%E2%80%94%E2%80%93%E6%9E%84%E5%BB%BA%E6%8B%93%E5%B1%95%E6%80%A7%E6%9B%B4%E5%A5%BD%E7%9A%84%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.</span> <span class="toc-text">里氏替换原则—–构建拓展性更好的系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99%E2%80%94%E2%80%94%E8%AE%A9%E9%A1%B9%E7%9B%AE%E6%8B%A5%E6%9C%89%E5%8F%98%E6%8D%A2%E7%9A%84%E8%83%BD%E5%8A%9B"><span class="toc-number">4.</span> <span class="toc-text">依赖倒置原则——让项目拥有变换的能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99%E2%80%94%E2%80%94-%E7%B3%BB%E7%BB%9F%E6%8B%A5%E6%9C%89%E6%9B%B4%E9%AB%98%E7%9A%84%E7%81%B5%E6%B4%BB%E5%BA%A6"><span class="toc-number">5.</span> <span class="toc-text">接口隔离原则——-系统拥有更高的灵活度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%AA%E7%B1%B3%E7%89%B9%E5%8E%9F%E5%88%99%E2%80%94%E2%80%94%E6%9B%B4%E5%A5%BD%E7%9A%84%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7"><span class="toc-number">6.</span> <span class="toc-text">迪米特原则——更好的可扩展性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/11/21/Hexo-github%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/" title="hexo+github打造个人网站"><img src="https://get.wallhere.com/photo/creepy-water-red-spooky-makeup-Batman-Joker-actor-blue-blood-dead-poster-Manhattan-ART-explore-explored-nyc-best-blog-oscar-glove-darkknight-blogged-gothamist-electric-blue-nomination-supporting-heathledger-whysoserious-nowpublic-862967.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hexo+github打造个人网站"/></a><div class="content"><a class="title" href="/2021/11/21/Hexo-github%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/" title="hexo+github打造个人网站">hexo+github打造个人网站</a><time datetime="2021-11-21T13:57:38.000Z" title="Created 2021-11-21 21:57:38">2021-11-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/18/Android-jetpack%E7%B3%BB%E5%88%97-lifecycle/" title="Android-jetpack系列-lifecycle"><img src="https://get.wallhere.com/photo/1920x1080-px-Batman-Blo0p-DC-Comics-Joker-minimalism-simple-background-738833.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android-jetpack系列-lifecycle"/></a><div class="content"><a class="title" href="/2021/11/18/Android-jetpack%E7%B3%BB%E5%88%97-lifecycle/" title="Android-jetpack系列-lifecycle">Android-jetpack系列-lifecycle</a><time datetime="2021-11-18T08:03:02.791Z" title="Created 2021-11-18 16:03:02">2021-11-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/29/Android-%E4%B8%8A%E4%BC%A0module%E5%88%B0jitpack.io/" title="Android-上传module到jitpack.io"><img src="https://images5.alphacoders.com/556/556063.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android-上传module到jitpack.io"/></a><div class="content"><a class="title" href="/2021/10/29/Android-%E4%B8%8A%E4%BC%A0module%E5%88%B0jitpack.io/" title="Android-上传module到jitpack.io">Android-上传module到jitpack.io</a><time datetime="2021-10-29T08:59:42.132Z" title="Created 2021-10-29 16:59:42">2021-10-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/27/English-%E6%89%BE%E5%AF%B9%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E6%B3%95%E7%9A%84%E7%AC%AC%E4%B8%80%E6%9C%AC%E4%B9%A6/" title="English-找对英语学习法第一本书"><img src="https://images4.alphacoders.com/227/22714.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="English-找对英语学习法第一本书"/></a><div class="content"><a class="title" href="/2021/08/27/English-%E6%89%BE%E5%AF%B9%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E6%B3%95%E7%9A%84%E7%AC%AC%E4%B8%80%E6%9C%AC%E4%B9%A6/" title="English-找对英语学习法第一本书">English-找对英语学习法第一本书</a><time datetime="2021-08-26T21:03:58.765Z" title="Created 2021-08-27 05:03:58">2021-08-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/26/English-%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/" title="English-英语学习建议"><img src="https://images.alphacoders.com/787/7873.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="English-英语学习建议"/></a><div class="content"><a class="title" href="/2021/08/26/English-%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE/" title="English-英语学习建议">English-英语学习建议</a><time datetime="2021-08-25T16:52:25.174Z" title="Created 2021-08-26 00:52:25">2021-08-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By diwannaRunaway</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
