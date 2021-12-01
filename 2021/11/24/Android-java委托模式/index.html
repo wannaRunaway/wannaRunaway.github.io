@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Android-java委托模式 | diwannaRunaway</title><meta name="keywords" content="Android"><meta name="author" content="diwannaRunaway"><meta name="copyright" content="diwannaRunaway"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="委托模式，与java继承不同的是，它体现的是代码组合的思想。解决问题思路是将委托对象中的某些操作交给其他被委托对象。可以将代码分离，使得某个对象不是那么臃肿。 这是最简单的委托模式： Print 中的 fun print()被委托给RealPrint，fun print()打印。 1234567891011121314151617181920fun main() &amp;#123;    var pri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-java委托模式">
+<meta property="og:url" content="http://example.com/2021/11/24/Android-java%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="diwannaRunaway">
+<meta property="og:description" content="委托模式，与java继承不同的是，它体现的是代码组合的思想。解决问题思路是将委托对象中的某些操作交给其他被委托对象。可以将代码分离，使得某个对象不是那么臃肿。 这是最简单的委托模式： Print 中的 fun print()被委托给RealPrint，fun print()打印。 1234567891011121314151617181920fun main() &amp;#123;    var pri">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images5.alphacoders.com/380/380978.jpg">
+<meta property="article:published_time" content="2021-11-23T17:13:54.000Z">
+<meta property="article:modified_time" content="2021-11-24T12:45:30.411Z">
+<meta property="article:author" content="diwannaRunaway">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images5.alphacoders.com/380/380978.jpg"><link rel="shortcut icon" href="/img/kucun.png"><link rel="canonical" href="http://example.com/2021/11/24/Android-java%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Android-java委托模式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-11-24 20:45:30'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/kucun.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">13</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://images5.alphacoders.com/380/380978.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">diwannaRunaway</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Android-java委托模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-11-23T17:13:54.000Z" title="Created 2021-11-24 01:13:54">2021-11-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-11-24T12:45:30.411Z" title="Updated 2021-11-24 20:45:30">2021-11-24</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Android-java委托模式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>委托模式，与java继承不同的是，它体现的是代码组合的思想。解决问题思路是将委托对象中的某些操作交给其他被委托对象。可以将代码分离，使得某个对象不是那么臃肿。</p>
+<p>这是最简单的委托模式：</p>
+<p>Print 中的 fun print()被委托给RealPrint，fun print()打印。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> print = Print()</span><br><span class="line">    print.print()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//委托模式。将某个对象中的操作委托给其他对象，是代码组合的思想</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RealPrint</span></span>() &#123;</span><br><span class="line">    <span class="comment">//被委托者</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">print</span><span class="params">()</span></span> &#123;</span><br><span class="line">        print(<span class="string">&quot;yeah, it is realPrint&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Print</span></span>() &#123;</span><br><span class="line">    <span class="comment">//委托者</span></span><br><span class="line">    <span class="keyword">var</span> realPrint: RealPrint = RealPrint()</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">print</span><span class="params">()</span></span> &#123;</span><br><span class="line">        realPrint.print()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用接口实现委托是很常见的一种模式。</p>
+<p>1、委托类实现接口方法，然后创建接口引用去掉用接口方法。</p>
+<p>2、委托类中function创建被委托类instance.</p>
+<p>3、被委托类实现接口，接口function中具体执行代码。</p>
+<p>4、委托类切换interface引用instance, 执行function.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> executeMe:ExecuteMe = ExecuteMe()</span><br><span class="line">    executeMe.toDelegateFirst()</span><br><span class="line">    executeMe.delegateFirst()</span><br><span class="line">    executeMe.delegateSecond()</span><br><span class="line">    executeMe.toDelegateSecond()</span><br><span class="line">    executeMe.delegateFirst()</span><br><span class="line">    executeMe.delegateSecond()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用接口的委托模式</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Delegateinterface</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">delegateFirst</span><span class="params">()</span></span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">delegateSecond</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//被委托类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DelegateFirst</span>:<span class="type">Delegateinterface&#123;</span></span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">delegateFirst</span><span class="params">()</span></span> &#123;</span><br><span class="line">        print(<span class="string">&quot;yeah! it&#x27;s <span class="subst">$&#123;javaClass.name&#125;</span> delegateFirst()&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">delegateSecond</span><span class="params">()</span></span> &#123;</span><br><span class="line">        print(<span class="string">&quot;yeah! it&#x27;s <span class="subst">$&#123;javaClass.name&#125;</span> delegateSecond()&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//被委托类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DelegateSecond</span>:<span class="type">Delegateinterface&#123;</span></span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">delegateFirst</span><span class="params">()</span></span> &#123;</span><br><span class="line">        print(<span class="string">&quot;yeah! it&#x27;s <span class="subst">$&#123;javaClass.simpleName&#125;</span> delegateFirst()&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">delegateSecond</span><span class="params">()</span></span> &#123;</span><br><span class="line">        print(<span class="string">&quot;yeah! it&#x27;s <span class="subst">$&#123;javaClass.name&#125;</span> delegateSecond()&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//委托类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExecuteMe</span>: <span class="type">Delegateinterface&#123;</span></span></span><br><span class="line">    <span class="keyword">lateinit</span> <span class="keyword">var</span> delegateinterface:Delegateinterface</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">delegateFirst</span><span class="params">()</span></span> &#123;</span><br><span class="line">        delegateinterface.delegateFirst()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">delegateSecond</span><span class="params">()</span></span> &#123;</span><br><span class="line">        delegateinterface.delegateSecond()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">toDelegateFirst</span><span class="params">()</span></span>&#123;</span><br><span class="line">        delegateinterface = DelegateFirst()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">toDelegateSecond</span><span class="params">()</span></span>&#123;</span><br><span class="line">        delegateinterface = DelegateSecond()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">diwannaRunaway</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/11/24/Android-java%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F/">http://example.com/2021/11/24/Android-java%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a></div><div class="post_share"><div class="social-share" data-image="https://images5.alphacoders.com/380/380978.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/12/01/Android-java%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"><img class="prev-cover" src="https://get.wallhere.com/photo/Joker-movie-Batman-1781187.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Android-java观察者模式</div></div></a></div><div class="next-post pull-right"><a href="/2021/11/21/Hexo-github%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/"><img class="next-cover" src="https://images5.alphacoders.com/380/380978.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Hexo-github打造个人网站</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/11/18/Android-jetpack%E7%B3%BB%E5%88%97-lifecycle/" title="Android-jetpack系列-lifecycle"><img class="cover" src="https://images.alphacoders.com/466/466447.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-18</div><div class="title">Android-jetpack系列-lifecycle</div></div></a></div><div><a href="/2021/05/11/Android-%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/" title="Android-面向对象6大原则源码设计模式"><img class="cover" src="https://get.wallhere.com/photo/Joker-movie-Batman-1781187.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-11</div><div class="title">Android-面向对象6大原则源码设计模式</div></div></a></div><div><a href="/2021/05/10/Android-okhttp3%E5%8D%95%E7%8B%AC%E4%BD%BF%E7%94%A8/" title="Android-okhttp3单独使用"><img class="cover" src="https://get.wallhere.com/photo/creepy-water-red-spooky-makeup-Batman-Joker-actor-blue-blood-dead-poster-Manhattan-ART-explore-explored-nyc-best-blog-oscar-glove-darkknight-blogged-gothamist-electric-blue-nomination-supporting-heathledger-whysoserious-nowpublic-862967.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-10</div><div class="title">Android-okhttp3单独使用</div></div></a></div><div><a href="/2021/05/12/Android-%E4%BB%8ELayoutInflater-from-context-%E7%9C%8B%E6%BA%90%E7%A0%81/" title="Android-从LayoutInflater.from(context)看源码"><img class="cover" src="https://get.wallhere.com/photo/artwork-Joker-white-background-sitting-1920369.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-12</div><div class="title">Android-从LayoutInflater.from(context)看源码</div></div></a></div><div><a href="/2021/05/12/Android-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="Android-源码中的单例模式"><img class="cover" src="https://images5.alphacoders.com/556/556063.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-12</div><div class="title">Android-源码中的单例模式</div></div></a></div><div><a href="/2021/10/29/Android-%E4%B8%8A%E4%BC%A0module%E5%88%B0jitpack.io/" title="Android-上传module到jitpack.io"><img class="cover" src="https://images5.alphacoders.com/556/556063.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-29</div><div class="title">Android-上传module到jitpack.io</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/kucun.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">diwannaRunaway</div><div class="author-info__description">running everyday</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">13</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/wannaRunaway"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/12/01/Android-java%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" title="Android-java观察者模式"><img src="https://get.wallhere.com/photo/Joker-movie-Batman-1781187.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android-java观察者模式"/></a><div class="content"><a class="title" href="/2021/12/01/Android-java%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" title="Android-java观察者模式">Android-java观察者模式</a><time datetime="2021-12-01T09:33:49.000Z" title="Created 2021-12-01 17:33:49">2021-12-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/24/Android-java%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F/" title="Android-java委托模式"><img src="https://images5.alphacoders.com/380/380978.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android-java委托模式"/></a><div class="content"><a class="title" href="/2021/11/24/Android-java%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F/" title="Android-java委托模式">Android-java委托模式</a><time datetime="2021-11-23T17:13:54.000Z" title="Created 2021-11-24 01:13:54">2021-11-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/21/Hexo-github%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/" title="Hexo-github打造个人网站"><img src="https://images5.alphacoders.com/380/380978.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo-github打造个人网站"/></a><div class="content"><a class="title" href="/2021/11/21/Hexo-github%E6%89%93%E9%80%A0%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/" title="Hexo-github打造个人网站">Hexo-github打造个人网站</a><time datetime="2021-11-21T13:57:38.000Z" title="Created 2021-11-21 21:57:38">2021-11-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/18/Android-jetpack%E7%B3%BB%E5%88%97-lifecycle/" title="Android-jetpack系列-lifecycle"><img src="https://images.alphacoders.com/466/466447.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android-jetpack系列-lifecycle"/></a><div class="content"><a class="title" href="/2021/11/18/Android-jetpack%E7%B3%BB%E5%88%97-lifecycle/" title="Android-jetpack系列-lifecycle">Android-jetpack系列-lifecycle</a><time datetime="2021-11-18T08:03:02.791Z" title="Created 2021-11-18 16:03:02">2021-11-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/29/Android-%E4%B8%8A%E4%BC%A0module%E5%88%B0jitpack.io/" title="Android-上传module到jitpack.io"><img src="https://images5.alphacoders.com/556/556063.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Android-上传module到jitpack.io"/></a><div class="content"><a class="title" href="/2021/10/29/Android-%E4%B8%8A%E4%BC%A0module%E5%88%B0jitpack.io/" title="Android-上传module到jitpack.io">Android-上传module到jitpack.io</a><time datetime="2021-10-29T08:59:42.132Z" title="Created 2021-10-29 16:59:42">2021-10-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By diwannaRunaway</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
