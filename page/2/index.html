@@ -1,749 +1,306 @@
-
-
-<!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
-
-
-
-<head>
-  <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  
-  <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="xdd">
-  <meta name="keywords" content="">
-  
-    <meta name="description" content="xdd的个人博客">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>xdd - xdd</title><meta name="author" content="xdd"><meta name="copyright" content="xdd"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="xdd的个人博客">
 <meta property="og:type" content="website">
 <meta property="og:title" content="xdd">
 <meta property="og:url" content="http://example.com/page/2/index.html">
 <meta property="og:site_name" content="xdd">
 <meta property="og:description" content="xdd的个人博客">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
 <meta property="article:author" content="xdd">
-<meta name="twitter:card" content="summary_large_image">
-  
-  
-  
-  <title>xdd</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
-  
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
-  
-
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
-
-  
-<meta name="generator" content="Hexo 6.3.0"></head>
-
-
-<body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 100vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>xdd</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>分类</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>标签</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>关于</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="not today, not tomorrow"></span>
-          
-        </div>
-
-        
-      </div>
-
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/page/2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'xdd',
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2024-02-28 11:23:05'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
       
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
+        get: key => {
+          const itemStr = localStorage.getItem(key)
       
-    </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
-    
-      <div class="container nopadding-x-md">
-        <div id="board"
-          style="margin-top: 0">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/06/04/Java-Thinking%20in%20Java/" target="_self">
-          Java-Thinking in Java
-        </a>
-      </h2>
-
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/06/04/Java-Thinking%20in%20Java/" target="_self">
-        <div>
-          重读Thinking in Java这本书，之前读过但没有坚持下去，这次必须要完整重读一遍了。 除去最后java界面组件开发，一共766页。  对象导论问题空间–解空间，面向对象编程只关心对象和他们之间的消息。java单继承，多态就是父类对象方法可以使用子类对象调用，向上转型是安全的，向下不安全，因为父类可以有多个子类，子类只有一个父类。 一切都是对象java内存5个分区： 1、寄存器，在处理器
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-06-04 08:43" pubdate>
-              2022-06-04
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Java/">#Java</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/05/16/Leetcode-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%A0%88/" target="_self">
-          Leetcode-实现一个栈
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/05/16/Leetcode-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%A0%88/" target="_self">
-        <div>
-          描述请你实现一个栈。 操作： push x：将 加x入栈，保证 x 为 int 型整数。 pop：输出栈顶，并让栈顶出栈 top：输出栈顶，栈顶不出栈 输入描述：第一行为一个正整数 n ，代表操作次数。(1≤n≤100000) 接下来的 n ，每行为一个字符串，代表一个操作。保证操作是题目描述中三种中的一种。 输出描述：如果操作为push，则不输出任何东西。 如果为另外两种，若栈为空，则输出 “e
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-05-16 15:17" pubdate>
-              2022-05-16
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Leetcode/">#Leetcode</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/04/17/%E5%BF%83%E7%90%86%E5%AD%A6-%E6%97%A0%E4%BB%8E%E9%80%89%E6%8B%A9%E4%B8%BA%E4%BD%95%E5%A4%9A%E5%8D%B3%E6%98%AF%E5%B0%91-BY%E5%B7%B4%E9%87%8C%C2%B7%E6%96%BD%E7%93%A6%E8%8C%A8/" target="_self">
-          认知心理学-无从选择为何多即是少BY巴里·施瓦茨
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/04/17/%E5%BF%83%E7%90%86%E5%AD%A6-%E6%97%A0%E4%BB%8E%E9%80%89%E6%8B%A9%E4%B8%BA%E4%BD%95%E5%A4%9A%E5%8D%B3%E6%98%AF%E5%B0%91-BY%E5%B7%B4%E9%87%8C%C2%B7%E6%96%BD%E7%93%A6%E8%8C%A8/" target="_self">
-        <div>
-          当我们选择的时候购物的真实体验从超市商品选择到大学教育科目选择，在生活中选择越来越多，这是多样化提现。实验中，6种口味饼干购买率高于30种，这是选择过多导致的问题吗？电视节目、服装是不是少点选择会更好呢？ 新领域的选择美国人用电公司的选择、保险的选择、医生选择等等，美国社会中的选择越来越多，这会花费人更多的精力去了解。但很多时候会让人沮丧，如医生给患者的选择，很多患者并不想要这种选择，这种责任转嫁
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-17 12:18" pubdate>
-              2022-04-17
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%AE%A4%E7%9F%A5%E5%BF%83%E7%90%86%E5%AD%A6/">#认知心理学</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/03/08/Typora-%E5%BF%AB%E6%8D%B7%E9%94%AE%E5%A4%A7%E5%85%A8mac/" target="_self">
-          Typora-快捷键大全mac
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/03/08/Typora-%E5%BF%AB%E6%8D%B7%E9%94%AE%E5%A4%A7%E5%85%A8mac/" target="_self">
-        <div>
-          这是typora快捷键大全，基于macos系统。  https://juejin.cn/post/6960861656494637086    功能 快捷键    新行 shift+enter   标题 command+1…6   段落 command+0   表 Command option t   代码块 Command option c   数学块 Command option b   引
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-08 14:09" pubdate>
-              2022-03-08
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Typora/">#Typora</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/03/08/Java-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" target="_self">
-          Java-多线程基础
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/03/08/Java-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" target="_self">
-        <div>
-          一个进程包括多个线程，进程包括由操作系统分配出来的内存空间，线程不能独立存在，必须存在进程之上。一个进程一直运行，知道所有的非守护线程结束运行后才停止。  线程状态1、新建状态使用了new关键字和thread或其子类建立一个线程后，就处于新建状态； 2、就绪状态start之后线程进入了就绪状态。进入了就绪队列中，等待jvm线程调度器的调用。 3、运行状态就绪状态的线程获取到了cpu资源，就可以执
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-08 14:04" pubdate>
-              2022-03-08
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Java/">#Java</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/02/18/Reading-%E8%B6%A3%E9%97%BB%E6%95%85%E4%BA%8B/" target="_self">
-          Reading-教育
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/02/18/Reading-%E8%B6%A3%E9%97%BB%E6%95%85%E4%BA%8B/" target="_self">
-        <div>
-          西洛特是苏州一所私立学校的外教，在中国呆了八年，他从德国过来，原本是抱着对中国神奇文化的向往和对中国人的质朴过来的，遗憾的是，年前他还是回国了。 为了给他送行，我们一行来到周庄廊上人家，这是他最喜欢的一家餐馆，铺子不大，但环境优美。席间，自然免不了谈论一些对教育的看法和离开的原因。他说他真的不愿意离开，他不想接受这种失败，带着挫败感回国是一件影响一生的事情，但他不得不回去，在他看来，他这一辈子也无
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-02-18 10:58" pubdate>
-              2022-02-18
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Reading/">#Reading</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/01/18/%E5%93%B2%E5%AD%A6-%E5%93%B2%E5%AD%A6%E9%97%AE%E9%A2%98BY%E6%B3%A2%E7%89%B9%E5%85%B0%C2%B7%E7%BD%97%E7%B4%A0/" target="_self">
-          哲学-哲学问题BY波特兰·罗素
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/01/18/%E5%93%B2%E5%AD%A6-%E5%93%B2%E5%AD%A6%E9%97%AE%E9%A2%98BY%E6%B3%A2%E7%89%B9%E5%85%B0%C2%B7%E7%BD%97%E7%B4%A0/" target="_self">
-        <div>
-          在本书各章中，我主要限于谈论那些我认为可以发表一点肯定的和建设性意见的问题，因为单纯否定的批判似乎是不正当的。为了这个缘故，本书中知识论所占篇幅就比形而上学更多些，而哲学家们讨论得很多的一些论题，倘使加以处理，也处理的非常简略。  现实与实在。一张桌子，我可以观察到它的反光颜色质地等等特点，摸起来手感平滑，显微镜观察发现沟壑众多，这种相悖的观察特点是桌子本身吗。大多数情况下，感觉特征并不是物质本
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-18 10:20" pubdate>
-              2022-01-18
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%93%B2%E5%AD%A6/">#哲学</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2022/01/17/%E5%93%B2%E5%AD%A6-%E3%80%8AWhat-Does-It-All-Mean%E3%80%8B-BY%E6%89%98%E9%A9%AC%E6%96%AF%E5%86%85%E6%A0%BC%E5%B0%94/" target="_self">
-          哲学-《What Does It All Mean》 BY托马斯内格尔
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2022/01/17/%E5%93%B2%E5%AD%A6-%E3%80%8AWhat-Does-It-All-Mean%E3%80%8B-BY%E6%89%98%E9%A9%AC%E6%96%AF%E5%86%85%E6%A0%BC%E5%B0%94/" target="_self">
-        <div>
-          我对中国哲学和中国文化知之甚少，所以不能对中国读者说些什么。或许我只能表达这样一个愿望：本书将传达在西方哲学中最为核心的东西—-思想自由的理念。它会使读者感到，要评估每一种主张、每一条论证和每一套理论，并且尝试着判断它们是否可以被接受，这最终都依赖于每一个人的独立思考，而非听命于权威。by 托马斯·内格尔  ​		这是一本简明的哲学入门的书籍，论证了几个简单的例子，包括外部世界、他人心灵、身心问
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-17 11:26" pubdate>
-              2022-01-17
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%93%B2%E5%AD%A6/">#哲学</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2021/12/25/%E5%93%B2%E5%AD%A6-%E5%A4%A7%E5%8D%AB%C2%B7%E4%BC%91%E8%B0%9F%EF%BC%9A%E4%BA%BA%E7%B1%BB%E7%90%86%E8%A7%A3%E7%A0%94%E7%A9%B6/" target="_self">
-          哲学-大卫·休谟：人类理解研究
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/25/%E5%93%B2%E5%AD%A6-%E5%A4%A7%E5%8D%AB%C2%B7%E4%BC%91%E8%B0%9F%EF%BC%9A%E4%BA%BA%E7%B1%BB%E7%90%86%E8%A7%A3%E7%A0%94%E7%A9%B6/" target="_self">
-        <div>
-          人类理解和研究​		从各派哲学说起，大多数人喜欢轻松愉快简单能够融入人类生活的哲学并对其赞赏，讨厌抽象精细的哲学研究，认为更多的哲学研究会激发人心中的恶。但这是不对的，哲学研究是对人道德、思想、观念、印象等一系列品质最全面的研究，人们不应该对不熟悉的超出自己经验理解之外的事情排斥。 ​		人心中的知觉分为2大类，不强烈知觉为观念，强烈知觉为印象。举个例子，生活在大山的孩子终于有天见到了海，每次他一
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-25 23:51" pubdate>
-              2021-12-25
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%93%B2%E5%AD%A6/">#哲学</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2021/12/18/Android-Room%E5%92%8CViewmodelCoroutineLivedata%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8/" target="_self">
-          Android-Room和ViewmodelCoroutineLivedata配合使用
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/18/Android-Room%E5%92%8CViewmodelCoroutineLivedata%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8/" target="_self">
-        <div>
-          这是小项目的样子，主界面是一个recyclerView从room取出的所有数据并使用livedata观察，左边floatiingButton点击清除room数据库，右边floatingButton点击进入存储数据界面insert表。 dbroom数据库所有操作 WordRoomDatabase 1、创建abstract WordRoomDatabase继承RoomDatabase，creat
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-12-18 12:41" pubdate>
-              2021-12-18
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-
-
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
-
-
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
-        </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
-    </div>
-  
-  
-  
-  
-</div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
       }
-      var text = subtitle.getAttribute('data-typed-text');
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
       
-        typing(text);
-      
-    })(window, document);
-  </script>
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="xdd"><span class="site-name">xdd</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">xdd</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/06/04/Java-Thinking%20in%20Java/" title="Java-Thinking in Java">Java-Thinking in Java</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-06-04T00:43:39.000Z" title="发表于 2022-06-04 08:43:39">2022-06-04</time></span></div><div class="content">
+重读Thinking in Java这本书，之前读过但没有坚持下去，这次必须要完整重读一遍了。
+除去最后java界面组件开发，一共766页。
+
+对象导论问题空间–解空间，面向对象编程只关心对象和他们之间的消息。java单继承，多态就是父类对象方法可以使用子类对象调用，向上转型是安全的，向下不安全，因为父类可以有多个子类，子类只有一个父类。
+一切都是对象java内存5个分区：
+1、寄存器，在处理器里面。
+2、堆栈，在ram中，对象引用就存储在这里。基本类型如int等就存储在这里。
+3、堆，ram中，存储对象。
+4、常量，存储在程序中。
+5、非ram存储，比如持久化存储之类的文件，在磁盘中。
+static静态，类方法和类成员可以被对象调用，与类调用相同，内存也是同一块。
+操作符++i是先运算再得出值，i++是先得出值再运算。基本类型运算会自动往大的数据类型转换，窄化数据要注意数据可能丢失。
+控制执行流程If else、while、do while、for、return、break
+break退出循环，continue跳过这个循环执行下一次循环。
+初始化与清理
+非常重要的一章
+
+java使 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/05/16/Leetcode-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%A0%88/" title="Leetcode-实现一个栈">Leetcode-实现一个栈</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-05-16T07:17:24.000Z" title="发表于 2022-05-16 15:17:24">2022-05-16</time></span></div><div class="content">描述请你实现一个栈。
+操作：
+push x：将 加x入栈，保证 x 为 int 型整数。
+pop：输出栈顶，并让栈顶出栈
+top：输出栈顶，栈顶不出栈
+输入描述：第一行为一个正整数 n ，代表操作次数。(1≤n≤100000)
+接下来的 n ，每行为一个字符串，代表一个操作。保证操作是题目描述中三种中的一种。
+输出描述：如果操作为push，则不输出任何东西。
+如果为另外两种，若栈为空，则输出 “error“
+否则按对应操作输出。
+示例1输入：
+12345676push 1poptoppush 2push 3pop
+
+复制
+输出：
+1231error3
+
+
+分析
+
+1、第一行是操作台操作的次数，执行的操作到n次数为止；
+2、输出2种情况，pop输出栈顶并出栈，top输出栈顶不出栈;
+3、pop和top输出，栈不为空输出正常值，栈为空则输出error;
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/04/17/%E5%BF%83%E7%90%86%E5%AD%A6-%E6%97%A0%E4%BB%8E%E9%80%89%E6%8B%A9%E4%B8%BA%E4%BD%95%E5%A4%9A%E5%8D%B3%E6%98%AF%E5%B0%91-BY%E5%B7%B4%E9%87%8C%C2%B7%E6%96%BD%E7%93%A6%E8%8C%A8/" title="认知心理学-无从选择为何多即是少BY巴里·施瓦茨">认知心理学-无从选择为何多即是少BY巴里·施瓦茨</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-04-17T04:18:47.000Z" title="发表于 2022-04-17 12:18:47">2022-04-17</time></span></div><div class="content">当我们选择的时候购物的真实体验从超市商品选择到大学教育科目选择，在生活中选择越来越多，这是多样化提现。实验中，6种口味饼干购买率高于30种，这是选择过多导致的问题吗？电视节目、服装是不是少点选择会更好呢？
+新领域的选择美国人用电公司的选择、保险的选择、医生选择等等，美国社会中的选择越来越多，这会花费人更多的精力去了解。但很多时候会让人沮丧，如医生给患者的选择，很多患者并不想要这种选择，这种责任转嫁太沉重。
+生活的选择是无时无刻的，比如早上起来洗漱、刮胡子、选择衣服等，当然也可以不这样干，如周末的时候就可以休息下。所以适当的不选择会让人感到舒适。
+我们如何选择选择与决定损失心态比得到心态效果强烈，比如买电脑带400块耳机和自己购买耳机，多数人会选择第一种，损失的心态效果更强烈。人的损失得到心态不是45度斜线，而是曲线，越多则感觉越小，这就是赌徒越来越上头的原因，俗称输麻了。
+信息的可用性，一台车世面好评如潮，而你的朋友买了后经常给你抱怨这车的问题，大多数人是不会选择这系列车的。这就是印象暗示推论法，人们总是对某一类信息过分看重的倾向，熟悉的经常发生的事情总会让人们更加有倾向。
+从选择者变 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/03/08/Typora-%E5%BF%AB%E6%8D%B7%E9%94%AE%E5%A4%A7%E5%85%A8mac/" title="Typora-快捷键大全mac">Typora-快捷键大全mac</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-08T06:09:45.000Z" title="发表于 2022-03-08 14:09:45">2022-03-08</time></span></div><div class="content">
+这是typora快捷键大全，基于macos系统。
+
+https://juejin.cn/post/6960861656494637086
 
 
 
-
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
+功能
+快捷键
 
 
 
-
-  <script  src="/js/local-search.js" ></script>
-
-
+新行
+shift+enter
 
 
-
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+标题
+command+1…6
 
 
-  
+段落
+command+0
 
-  <noscript>
-    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
-  </noscript>
-</body>
-</html>
+
+表
+Command option t
+
+
+代码块
+Command option c
+
+
+数学块
+Command option b
+
+
+引用
+Command option q
+
+
+有序列表
+command option o
+
+
+无序列表
+command option u
+
+
+加粗
+command b
+
+
+重点
+command i
+
+
+下划线
+Command u
+
+
+超链接
+Command k
+
+
+图片
+command control i
+
+
+切换侧边栏
+command shift l
+
+
+</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/03/08/Java-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="Java-多线程基础">Java-多线程基础</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-03-08T06:04:47.000Z" title="发表于 2022-03-08 14:04:47">2022-03-08</time></span></div><div class="content">
+一个进程包括多个线程，进程包括由操作系统分配出来的内存空间，线程不能独立存在，必须存在进程之上。一个进程一直运行，知道所有的非守护线程结束运行后才停止。
+
+线程状态1、新建状态使用了new关键字和thread或其子类建立一个线程后，就处于新建状态；
+2、就绪状态start之后线程进入了就绪状态。进入了就绪队列中，等待jvm线程调度器的调用。
+3、运行状态就绪状态的线程获取到了cpu资源，就可以执行run，此时，它可以变为阻塞、就绪、死亡状态。
+4、阻塞状态线程执行了sleep、suspend等方法，失去了cpu资源，该线程就从运行状态进入阻塞状态。在睡眠时间已到或者获取到了资源后就可以重新进入就绪状态，三种：
+1、等待阻塞，线程执行wait方法；
+2、同步阻塞，线程获取synchronized同步锁失败；
+3、其他阻塞，线程通过sleep()或者join()发出io请求时，线程就会进入阻塞状态，sleep()超时，join()等待线程终止或超时，线程重新进入就绪状态；
+线程的优先级线程优先级是一个整数，在1…10之间，Thread.MIN_PRIORITY—Thread.MAX_PR ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/02/18/Reading-%E8%B6%A3%E9%97%BB%E6%95%85%E4%BA%8B/" title="Reading-教育">Reading-教育</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-02-18T02:58:15.000Z" title="发表于 2022-02-18 10:58:15">2022-02-18</time></span></div><div class="content">西洛特是苏州一所私立学校的外教，在中国呆了八年，他从德国过来，原本是抱着对中国神奇文化的向往和对中国人的质朴过来的，遗憾的是，年前他还是回国了。
+为了给他送行，我们一行来到周庄廊上人家，这是他最喜欢的一家餐馆，铺子不大，但环境优美。席间，自然免不了谈论一些对教育的看法和离开的原因。他说他真的不愿意离开，他不想接受这种失败，带着挫败感回国是一件影响一生的事情，但他不得不回去，在他看来，他这一辈子也无法在中国看到真正的教育，他为中国的未来深深担忧。
+他说，看到孩子每天5点多到校，晚上6点多离校，家长每天都很疲惫，老师更是疲惫，这种连大人都吃不消的教学模式竟然没谁改变，看到孩子们每天无精打采，每天在应付着，他心里很痛。德国的孩子都是快乐的，每天9:30-下午3:30，没有所谓的家庭作业，可这并没有丝毫影响他们的创造，他们长大后做的不比中国毕业生逊色，很多方面甚至很出色。
+他多次跟校长提议，少上课，多让孩子娱乐，这样可以提高学生学习知识的兴趣，开发心智。校长很无奈，大家都在比分数，比成绩，一旦名落孙山，学校就要倒闭。那时候老师们不仅失业，学生们还要到很远的地方就读，还是继续延续这种披星戴月的学 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/18/%E5%93%B2%E5%AD%A6-%E5%93%B2%E5%AD%A6%E9%97%AE%E9%A2%98BY%E6%B3%A2%E7%89%B9%E5%85%B0%C2%B7%E7%BD%97%E7%B4%A0/" title="哲学-哲学问题BY波特兰·罗素">哲学-哲学问题BY波特兰·罗素</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-01-18T02:20:32.000Z" title="发表于 2022-01-18 10:20:32">2022-01-18</time></span></div><div class="content">
+在本书各章中，我主要限于谈论那些我认为可以发表一点肯定的和建设性意见的问题，因为单纯否定的批判似乎是不正当的。为了这个缘故，本书中知识论所占篇幅就比形而上学更多些，而哲学家们讨论得很多的一些论题，倘使加以处理，也处理的非常简略。
+
+现实与实在。一张桌子，我可以观察到它的反光颜色质地等等特点，摸起来手感平滑，显微镜观察发现沟壑众多，这种相悖的观察特点是桌子本身吗。大多数情况下，感觉特征并不是物质本身，因为有太多客观条件存在，例如光照、温度、湿度、海拔等等，所以依照感觉构建出某种物质的特点可以称之为现实。但物质本身的实在并不是这种现实。
+物质的存在。生活中，我对物质的观察基于感官感觉，当我不观察物质的时候，它就不存在了吗？从笛卡尔的怀疑论说起，我可以证明我是存在的，因为当我不存在我的怀疑也失去了意义，所以我肯定存在。那客观世界呢，一只猫当我观察到的时候是存在的，那我不观察没有感知的时候可以认为不存在吗？猫饿了会叫，开心就会乱跑，这些事物本身就证明了猫是存在的，所以物质的存在可以依照感觉特征去感受，但不能用感觉特征去评判物质。物质是存在的，感觉特征是片面的。一切知识必须根据本能信仰建立起来 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2022/01/17/%E5%93%B2%E5%AD%A6-%E3%80%8AWhat-Does-It-All-Mean%E3%80%8B-BY%E6%89%98%E9%A9%AC%E6%96%AF%E5%86%85%E6%A0%BC%E5%B0%94/" title="哲学-《What Does It All Mean》 BY托马斯内格尔">哲学-《What Does It All Mean》 BY托马斯内格尔</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-01-17T03:26:46.000Z" title="发表于 2022-01-17 11:26:46">2022-01-17</time></span></div><div class="content">
+我对中国哲学和中国文化知之甚少，所以不能对中国读者说些什么。或许我只能表达这样一个愿望：本书将传达在西方哲学中最为核心的东西—-思想自由的理念。它会使读者感到，要评估每一种主张、每一条论证和每一套理论，并且尝试着判断它们是否可以被接受，这最终都依赖于每一个人的独立思考，而非听命于权威。by 托马斯·内格尔
+
+​		这是一本简明的哲学入门的书籍，论证了几个简单的例子，包括外部世界、他人心灵、身心问题、自由意志、对错、公正、死亡与生活的意义问题。
+​		首先吸引我的就是生活的意义。在当下的中国，所谓流行比较文化，其实就是体现出来优越感，为何每个人都要去比较去展示给别人优越感，内核还是自卑。深耕于这个国家民族几千年的自卑，看这个国家历史就知道，几千年的屠杀、剥削、反抗、奴隶史循环往复，一个朝代覆灭又一个朝代兴起，每个人都在穷尽一生把别人踩在脚下。为什么？因为不去展示优越、不去比较显示给别人自己有多强大，别人就要要你命。而这种特点就造成这个国家从上到下面子文化、假大空文化、吹嘘文化。其内核还是自卑，人们深深的认识到，自己不过是这场生下来就参与游戏的棋子，毫无安全感，毫无被爱被需要的感觉。
+​ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/12/25/%E5%93%B2%E5%AD%A6-%E5%A4%A7%E5%8D%AB%C2%B7%E4%BC%91%E8%B0%9F%EF%BC%9A%E4%BA%BA%E7%B1%BB%E7%90%86%E8%A7%A3%E7%A0%94%E7%A9%B6/" title="哲学-大卫·休谟：人类理解研究">哲学-大卫·休谟：人类理解研究</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-25T15:51:31.000Z" title="发表于 2021-12-25 23:51:31">2021-12-25</time></span></div><div class="content">人类理解和研究​		从各派哲学说起，大多数人喜欢轻松愉快简单能够融入人类生活的哲学并对其赞赏，讨厌抽象精细的哲学研究，认为更多的哲学研究会激发人心中的恶。但这是不对的，哲学研究是对人道德、思想、观念、印象等一系列品质最全面的研究，人们不应该对不熟悉的超出自己经验理解之外的事情排斥。
+​		人心中的知觉分为2大类，不强烈知觉为观念，强烈知觉为印象。举个例子，生活在大山的孩子终于有天见到了海，每次他一想起大海就会想起辽阔、海风、海天一线等场景，这种实体化的场景就是具有强烈知觉的印象。大山的孩子没见过飞机，听朋友说铁壳子长翅膀能飞起来的就是飞机，这种不强烈想象的知觉就是观念。但是注意，观念是一切印象的摹本，人具体感知到了什么就有什么样的观念，就算是天马行空的想象力也存在观念的联系。
+​		观念三种联系原则：相似关系、接近关系、因果关系。相似关系比如人看到了朋友的照片，那大脑中一下就涌现出朋友的英容笑貌，人各种感情升腾而起；接近关系如同古话近乡情更切就是这个理，人离开家乡好多年，回家时候距离500里和距离550米那其中感情如同烧水一般升温；因果关系是人类从最古老的经验之中获得的，是人类最纯粹最 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/12/18/Android-Room%E5%92%8CViewmodelCoroutineLivedata%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8/" title="Android-Room和ViewmodelCoroutineLivedata配合使用">Android-Room和ViewmodelCoroutineLivedata配合使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-18T04:41:06.000Z" title="发表于 2021-12-18 12:41:06">2021-12-18</time></span></div><div class="content">
+
+
+这是小项目的样子，主界面是一个recyclerView从room取出的所有数据并使用livedata观察，左边floatiingButton点击清除room数据库，右边floatingButton点击进入存储数据界面insert表。
+dbroom数据库所有操作
+WordRoomDatabase
+1、创建abstract WordRoomDatabase继承RoomDatabase，create abstract fun wordDao()
+2、dcl单例wordRoomDatabase instance by fun getDatabase
+3、addCallback()，wordDatabaseCallback override fun onCreate use coroutine function launch()对room init。deleteAll() insert() insert()
+
+1234567891011121314151617181920212223242526272829303132333435363738394041@Database(entities ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xdd</div><div class="author-info__description">xdd的个人博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/26/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E-by%E5%90%B4%E5%86%9B/" title="计算机-数学之美-by吴军">计算机-数学之美-by吴军</a><time datetime="2024-02-26T08:59:00.000Z" title="发表于 2024-02-26 16:59:00">2024-02-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/22/%E8%AE%B0%E5%BD%95Hexo%E5%92%8Cgit%E4%BD%BF%E7%94%A8%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5-443%E9%97%AE%E9%A2%98/" title="记录Hexo和git使用无法连接-443问题.md">记录Hexo和git使用无法连接-443问题.md</a><time datetime="2024-01-22T03:30:30.000Z" title="发表于 2024-01-22 11:30:30">2024-01-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/12/test/" title="test">test</a><time datetime="2024-01-12T06:25:30.000Z" title="发表于 2024-01-12 14:25:30">2024-01-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/04/Reading-%E6%96%87%E5%8C%96%E8%BE%93%E5%87%BA%E8%AE%BA/" title="Reading-文化输出论">Reading-文化输出论</a><time datetime="2023-08-04T05:33:44.000Z" title="发表于 2023-08-04 13:33:44">2023-08-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/29/%E5%BF%83%E7%90%86%E5%AD%A6%C2%B7%E6%A2%A6%E7%9A%84%E8%A7%A3%E6%9E%90-%E5%BC%97%E6%B4%9B%E4%BC%8A%E5%BE%B7/" title="心理学-梦的解析·弗洛伊德">心理学-梦的解析·弗洛伊德</a><time datetime="2023-06-29T15:36:00.000Z" title="发表于 2023-06-29 23:36:00">2023-06-29</time></div></div></div></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%93%B2%E5%AD%A6/" style="font-size: 1.3em; color: #99a1ac">哲学</a> <a href="/tags/Android/" style="font-size: 1.5em; color: #99a9bf">Android</a> <a href="/tags/Common/" style="font-size: 1.2em; color: #999da3">Common</a> <a href="/tags/Leetcode/" style="font-size: 1.2em; color: #999da3">Leetcode</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/Reading/" style="font-size: 1.4em; color: #99a5b6">Reading</a> <a href="/tags/Typora/" style="font-size: 1.1em; color: #999">Typora</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 1.1em; color: #999">技术</a> <a href="/tags/%E5%BF%83%E7%90%86%E5%AD%A6/" style="font-size: 1.2em; color: #999da3">心理学</a> <a href="/tags/English/" style="font-size: 1.1em; color: #999">English</a> <a href="/tags/%E8%AE%A4%E7%9F%A5%E5%BF%83%E7%90%86%E5%AD%A6/" style="font-size: 1.1em; color: #999">认知心理学</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 1.1em; color: #999">原创</a> <a href="/tags/Hexo/" style="font-size: 1.1em; color: #999">Hexo</a> <a href="/tags/Java/" style="font-size: 1.2em; color: #999da3">Java</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" style="font-size: 1.1em; color: #999">计算机</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/06/"><span class="card-archive-list-date">六月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/02/"><span class="card-archive-list-date">二月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/01/"><span class="card-archive-list-date">一月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/11/"><span class="card-archive-list-date">十一月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">十月 2022</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">41</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-02-28T03:23:05.889Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By xdd</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
