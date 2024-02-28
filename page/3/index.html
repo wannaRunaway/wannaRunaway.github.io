@@ -1,191 +1,749 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>xdd - xdd</title><meta name="author" content="xdd"><meta name="copyright" content="xdd"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="xdd的个人博客">
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="xdd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="xdd的个人博客">
 <meta property="og:type" content="website">
 <meta property="og:title" content="xdd">
 <meta property="og:url" content="http://example.com/page/3/index.html">
 <meta property="og:site_name" content="xdd">
 <meta property="og:description" content="xdd的个人博客">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
 <meta property="article:author" content="xdd">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/page/3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
-  root: '/',
-  algolia: undefined,
-  localSearch: undefined,
-  translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
-  copy: {
-    success: '复制成功',
-    error: '复制错误',
-    noSupport: '浏览器不支持'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  dateSuffix: {
-    just: '刚刚',
-    min: '分钟前',
-    hour: '小时前',
-    day: '天前',
-    month: '个月前'
-  },
-  copyright: undefined,
-  lightbox: 'fancybox',
-  Snackbar: undefined,
-  infinitegrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
-    buttonText: '加载更多'
-  },
-  isPhotoFigcaption: false,
-  islazyload: false,
-  isAnchor: false,
-  percent: {
-    toc: true,
-    rightside: false,
-  },
-  autoDarkmode: false
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'xdd',
-  isPost: false,
-  isHome: true,
-  isHighlightShrink: false,
-  isToc: false,
-  postUpdate: '2024-02-28 11:23:05'
-}</script><script>(win=>{
-      win.saveToLocal = {
-        set: (key, value, ttl) => {
-          if (ttl === 0) return
-          const now = Date.now()
-          const expiry = now + ttl * 86400000
-          const item = {
-            value,
-            expiry
-          }
-          localStorage.setItem(key, JSON.stringify(item))
-        },
-      
-        get: key => {
-          const itemStr = localStorage.getItem(key)
-      
-          if (!itemStr) {
-            return undefined
-          }
-          const item = JSON.parse(itemStr)
-          const now = Date.now()
-      
-          if (now > item.expiry) {
-            localStorage.removeItem(key)
-            return undefined
-          }
-          return item.value
-        }
-      }
-    
-      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        script.onerror = reject
-        script.onload = script.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          script.onload = script.onreadystatechange = null
-          resolve()
-        }
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>xdd</title>
 
-        Object.keys(attr).forEach(key => {
-          script.setAttribute(key, attr[key])
-        })
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
-        document.head.appendChild(script)
-      })
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
     
-      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onerror = reject
-        link.onload = link.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          link.onload = link.onreadystatechange = null
-          resolve()
-        }
-        document.head.appendChild(link)
-      })
-    
-      win.activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
-    
-        if (t === 'dark') activateDarkMode()
-        else if (t === 'light') activateLightMode()
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>xdd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="not today, not tomorrow"></span>
+          
+        </div>
+
+        
+      </div>
+
       
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
     
-      const detectApple = () => {
-        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-          document.documentElement.classList.add('apple')
-        }
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2021/12/11/Common-vmware%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/" target="_self">
+          Common-vmware虚拟机桥接模式网络配置
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/11/Common-vmware%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/" target="_self">
+        <div>
+          VMware Fusion连接模式VMware 桥接模式VMware桥接模式，也就是将虚拟机的虚拟网络适配器与主机的物理网络适配器进行交接，虚拟机中的虚拟网络适配器可通过主机中的物理网络适配器直接访问到外部网络(例如图中所示的局域网和Internet，下同)。简而言之，这就好像在上图所示的局域网中添加了一台新的、独立的计算机一样。因此，虚拟机也会占用局域网中的一个IP地址，并且可以和其他终端进行相
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-11 13:07" pubdate>
+              2021-12-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Common/">#Common</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2021/12/11/Common-vmware%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/" target="_self">
+          Common-vmware虚拟机安装
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/11/Common-vmware%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/" target="_self">
+        <div>
+          安装vmware Fusion虚拟机 1、https://www.vmware.com/ 官网，products搜索vmware fusion 12 for mac下载。 2、申请密钥需要注册并登陆。 3、注册中的坑，这个属于前端网页不提示，应该是对于某些地区人的限制。需要特别注意设置下: 没有按照要求填写。刚注册在下载了，填了美国的手机号码Phone Number：0013602923672，A
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-11 00:00" pubdate>
+              2021-12-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Common/">#Common</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2021/12/07/Git-git%E5%8D%87%E7%BA%A7/" target="_self">
+          Git-git升级
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/07/Git-git%E5%8D%87%E7%BA%A7/" target="_self">
+        <div>
+          mac上的git升级. 1、挂上vpn, 设置全局模式. 2、安装brew    &#x2F;usr&#x2F;bin&#x2F;ruby -e “$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)” 3、安装git   brew install git 4、可以看到当前新git文件和旧gi
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-07 15:24" pubdate>
+              2021-12-07
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2021/12/07/Android-ChainOfResponsibility%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" target="_self">
+          Android-ChainOfResponsibility责任链模式
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/07/Android-ChainOfResponsibility%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" target="_self">
+        <div>
+          责任链在Android中特别常用的设计模式，例如okhttp的intercepter等等. 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455//责任链模式enum class Topic &#123;    NONE, BUTTON, DIALO
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-07 00:12" pubdate>
+              2021-12-07
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2021/12/04/Android-SingleInstance%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" target="_self">
+          Android-SingleInstance单例模式
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/04/Android-SingleInstance%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" target="_self">
+        <div>
+          单例模式在Android非常常见，例如user、networkManager、数据库操作等等。一般使用dcl或者静态内部类单例，带参数选择dcl，不带参数静态内部类。 1、java单例5种写法。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-04 20:31" pubdate>
+              2021-12-04
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2021/12/04/Android-Factory%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" target="_self">
+          Android-Factory工厂模式
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/04/Android-Factory%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" target="_self">
+        <div>
+          工厂模式非常常见，一般分为简单工厂模式、工厂模式、抽象工厂 1、简单工厂。类创建型模式，通过参数使用静态方法创建工厂。 12345678910111213141516171819202122232425262728293031323334353637//简单工厂模式，对象切换在静态方法完成interface SimpleFactoryDraw&#123;    fun draw()&#125;pr
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-04 11:34" pubdate>
+              2021-12-04
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2021/12/03/Android-Build%E6%A8%A1%E5%BC%8F/" target="_self">
+          Android-Build模式
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/03/Android-Build%E6%A8%A1%E5%BC%8F/" target="_self">
+        <div>
+          Build模式在Android中非常常见，例如dialog创建、okhttp配置等等。build模式是将复杂对象和表示分离，一步步构造对象。 1、静态内部类Build中function setConponent()将各个属性设置进去并返回this 2、build()创建Product(build), 参数构造时将build属性设置给product 3、Product.Build().setConp
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-03 21:19" pubdate>
+              2021-12-03
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2021/12/02/Android-proxy%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" target="_self">
+          Android-proxy代理模式
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/02/Android-proxy%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" target="_self">
+        <div>
+          代理模式是一种非常常见的模式，在java或者kotlin中，当我们去扩展某个对象也需要保护这个对象的时候，就可以使用代理模式。代理模式是一种控制模式。 1、静态代理。委托类和代理类实现同一个接口，代理类初始化时候将委托类也初始化，然后就可以使用委托类对象调用方法等，而代理类新加入方法属性可以对属性类做扩展，这样非常安全。 12345678910111213141516171819202122232
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-02 17:01" pubdate>
+              2021-12-02
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2021/12/01/Android-observer%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" target="_self">
+          Android-observer观察者模式
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/12/01/Android-observer%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" target="_self">
+        <div>
+          观察者模式是一种一对多的对象行为模式，当被观察者改变时，所有依赖于他的观察者都会自动更新。常见例子比如Android中的button.setOnclickListener()，broadcastReceiver, rxJava等等。这里通过一个自定义观察者模式来看： 123456789101112131415161718192021222324252627282930313233343536373
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-12-01 17:33" pubdate>
+              2021-12-01
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2021/11/24/Android-delegate%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F/" target="_self">
+          Android-delegate委托模式
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/11/24/Android-delegate%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F/" target="_self">
+        <div>
+          委托模式，与java继承不同的是，它体现的是代码组合的思想。解决问题思路是将委托对象中的某些操作交给其他被委托对象。可以将代码分离，使得某个对象不是那么臃肿。 这是最简单的委托模式： Print 中的 fun print()被委托给RealPrint，fun print()打印。 1234567891011121314151617181920fun main() &#123;    var pri
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-24 01:13" pubdate>
+              2021-11-24
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
       }
-      detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="xdd"><span class="site-name">xdd</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">xdd</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/12/11/Common-vmware%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/" title="Common-vmware虚拟机桥接模式网络配置">Common-vmware虚拟机桥接模式网络配置</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-11T05:07:54.000Z" title="发表于 2021-12-11 13:07:54">2021-12-11</time></span></div><div class="content">VMware Fusion连接模式VMware 桥接模式VMware桥接模式，也就是将虚拟机的虚拟网络适配器与主机的物理网络适配器进行交接，虚拟机中的虚拟网络适配器可通过主机中的物理网络适配器直接访问到外部网络(例如图中所示的局域网和Internet，下同)。简而言之，这就好像在上图所示的局域网中添加了一台新的、独立的计算机一样。因此，虚拟机也会占用局域网中的一个IP地址，并且可以和其他终端进行相互访问。桥接模式网络连接支持有线和无线主机网络适配器。如果你想把虚拟机当做一台完全独立的计算机看待，并且允许它和其他终端一样的进行网络通信，那么桥接模式通常是虚拟机访问网络的最简单途径。
-VMware NAT模式NAT，是Network Address Translation的缩写，意即网络地址转换。NAT模式也是VMware创建虚拟机的默认网络连接模式。使用NAT模式网络连接时，VMware会在主机上建立单独的专用网络，用以在主机和虚拟机之间相互通信。虚拟机向外部网络发送的请求数据”包裹”，都会交由NAT网络适配器加上”特殊标记”并以主机的名义转发出去，外部网络返回的响应数据”包裹”，也是先 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/12/11/Common-vmware%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/" title="Common-vmware虚拟机安装">Common-vmware虚拟机安装</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-10T16:00:15.000Z" title="发表于 2021-12-11 00:00:15">2021-12-11</time></span></div><div class="content">安装vmware Fusion虚拟机
-1、https://www.vmware.com/ 官网，products搜索vmware fusion 12 for mac下载。
-2、申请密钥需要注册并登陆。
-3、注册中的坑，这个属于前端网页不提示，应该是对于某些地区人的限制。需要特别注意设置下: 没有按照要求填写。刚注册在下载了，填了美国的手机号码Phone Number：0013602923672，Adress:Texas，City:Houston,Zip Code:77001，其它的随便。
-4、安装你需要的系统版本。
-5、用起来感觉确实很丝滑，新版本的Fusion虚拟机。
-</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/12/07/Git-git%E5%8D%87%E7%BA%A7/" title="Git-git升级">Git-git升级</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-07T07:24:27.000Z" title="发表于 2021-12-07 15:24:27">2021-12-07</time></span></div><div class="content">mac上的git升级.
-1、挂上vpn, 设置全局模式.
-2、安装brew   
-&#x2F;usr&#x2F;bin&#x2F;ruby -e “$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)”
-3、安装git 
- brew install git
-4、可以看到当前新git文件和旧git文件
-which -a git
-&#x2F;usr&#x2F;local&#x2F;bin&#x2F;git   &#x2F;旧git 
-&#x2F;usr&#x2F;bin&#x2F;git            &#x2F;新git
-5、切换到之前git文件夹，删除git
-sudo rm -rf git*
-6、将新下载git overwrite到当前文件夹
- brew link –overwrite git
-7、ls检查文件，git –version 查看当前git版本.
-</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/12/07/Android-ChainOfResponsibility%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" title="Android-ChainOfResponsibility责任链模式">Android-ChainOfResponsibility责任链模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-06T16:12:57.000Z" title="发表于 2021-12-07 00:12:57">2021-12-07</time></span></div><div class="content">责任链在Android中特别常用的设计模式，例如okhttp的intercepter等等.
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455//责任链模式enum class Topic &#123;    NONE, BUTTON, DIALOG, APPLICATION&#125;private abstract class HelpHandler(var helpHandler: HelpHandler?, var topic: Topic) &#123;    open fun handleHelp() &#123;        helpHandler?.handleHelp()    &#125;    open fun hasHelp(): Boolean &#123;        return topic != Topic.NONE    &#125;&#125;private abstract class Widg ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/12/04/Android-SingleInstance%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="Android-SingleInstance单例模式">Android-SingleInstance单例模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-04T12:31:58.000Z" title="发表于 2021-12-04 20:31:58">2021-12-04</time></span></div><div class="content">单例模式在Android非常常见，例如user、networkManager、数据库操作等等。一般使用dcl或者静态内部类单例，带参数选择dcl，不带参数静态内部类。
-1、java单例5种写法。
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192//java 5种单例模式public class SingleInstance &#123;    //加载时创建单例    static class SingleInstanceAdd &#123;        private SingleInstanceAdd() &#123;        &#125;        private static SingleInstanceAdd instanceAdd = new SingleInsta ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/12/04/Android-Factory%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="Android-Factory工厂模式">Android-Factory工厂模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-04T03:34:19.000Z" title="发表于 2021-12-04 11:34:19">2021-12-04</time></span></div><div class="content">工厂模式非常常见，一般分为简单工厂模式、工厂模式、抽象工厂
-1、简单工厂。类创建型模式，通过参数使用静态方法创建工厂。
-12345678910111213141516171819202122232425262728293031323334353637//简单工厂模式，对象切换在静态方法完成interface SimpleFactoryDraw&#123;    fun draw()&#125;private class Circle: SimpleFactoryDraw&#123;    override fun draw() &#123;        println(javaClass.name+ &quot; isinvoking &quot; + Thread.currentThread().stackTrace[1].methodName)    &#125;&#125;private class Shape: SimpleFactoryDraw&#123;    override fun draw() &#123;        println(javaClass.name ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/12/03/Android-Build%E6%A8%A1%E5%BC%8F/" title="Android-Build模式">Android-Build模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-03T13:19:37.000Z" title="发表于 2021-12-03 21:19:37">2021-12-03</time></span></div><div class="content">Build模式在Android中非常常见，例如dialog创建、okhttp配置等等。build模式是将复杂对象和表示分离，一步步构造对象。
-1、静态内部类Build中function setConponent()将各个属性设置进去并返回this
-2、build()创建Product(build), 参数构造时将build属性设置给product
-3、Product.Build().setConponent().build创建product instance
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748//Build模式class Product() &#123;    private lateinit var head: String    private lateinit var body: String    private lateinit var foot: String    constructor(build: Build) : this()  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/12/02/Android-proxy%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/" title="Android-proxy代理模式">Android-proxy代理模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-02T09:01:00.000Z" title="发表于 2021-12-02 17:01:00">2021-12-02</time></span></div><div class="content">代理模式是一种非常常见的模式，在java或者kotlin中，当我们去扩展某个对象也需要保护这个对象的时候，就可以使用代理模式。代理模式是一种控制模式。
-1、静态代理。委托类和代理类实现同一个接口，代理类初始化时候将委托类也初始化，然后就可以使用委托类对象调用方法等，而代理类新加入方法属性可以对属性类做扩展，这样非常安全。
-1234567891011121314151617181920212223242526272829303132333435//静态代理private interface ISubject&#123;    fun init()    fun doAction()&#125;//真实对象委托类class RealSubject: ISubject&#123;    override fun init() &#123;        println(&quot;$&#123;javaClass.name&#125; function init()&quot;)    &#125;    override fun doAction() &#123;        print ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/12/01/Android-observer%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/" title="Android-observer观察者模式">Android-observer观察者模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-12-01T09:33:49.000Z" title="发表于 2021-12-01 17:33:49">2021-12-01</time></span></div><div class="content">观察者模式是一种一对多的对象行为模式，当被观察者改变时，所有依赖于他的观察者都会自动更新。常见例子比如Android中的button.setOnclickListener()，broadcastReceiver, rxJava等等。这里通过一个自定义观察者模式来看：
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172interface Observer &#123;    //接受被观察者的信息    fun update(observable: Observable, objects: Any)&#125;open class Observable &#123;    //存储所有的观察者对象    private var list: ArrayList&lt;Observer&gt; = ArrayList&lt;Observer&gt;()    //添加观察者对 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2021/11/24/Android-delegate%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F/" title="Android-delegate委托模式">Android-delegate委托模式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-11-23T17:13:54.000Z" title="发表于 2021-11-24 01:13:54">2021-11-24</time></span></div><div class="content">委托模式，与java继承不同的是，它体现的是代码组合的思想。解决问题思路是将委托对象中的某些操作交给其他被委托对象。可以将代码分离，使得某个对象不是那么臃肿。
-这是最简单的委托模式：
-Print 中的 fun print()被委托给RealPrint，fun print()打印。
-1234567891011121314151617181920fun main() &#123;    var print = Print()    print.print()&#125;//委托模式。将某个对象中的操作委托给其他对象，是代码组合的思想public class RealPrint() &#123;    //被委托者    fun print() &#123;        print(&quot;yeah, it is realPrint&quot;)    &#125;&#125;public class Print() &#123;    //委托者    var realPrint: RealPrint = RealPrint()    fun print() &#123;       ...</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#content-inner">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#content-inner">4</a><a class="page-number" href="/page/5/#content-inner">5</a><a class="extend next" rel="next" href="/page/4/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xdd</div><div class="author-info__description">xdd的个人博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/26/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E-by%E5%90%B4%E5%86%9B/" title="计算机-数学之美-by吴军">计算机-数学之美-by吴军</a><time datetime="2024-02-26T08:59:00.000Z" title="发表于 2024-02-26 16:59:00">2024-02-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/22/%E8%AE%B0%E5%BD%95Hexo%E5%92%8Cgit%E4%BD%BF%E7%94%A8%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5-443%E9%97%AE%E9%A2%98/" title="记录Hexo和git使用无法连接-443问题.md">记录Hexo和git使用无法连接-443问题.md</a><time datetime="2024-01-22T03:30:30.000Z" title="发表于 2024-01-22 11:30:30">2024-01-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/12/test/" title="test">test</a><time datetime="2024-01-12T06:25:30.000Z" title="发表于 2024-01-12 14:25:30">2024-01-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/04/Reading-%E6%96%87%E5%8C%96%E8%BE%93%E5%87%BA%E8%AE%BA/" title="Reading-文化输出论">Reading-文化输出论</a><time datetime="2023-08-04T05:33:44.000Z" title="发表于 2023-08-04 13:33:44">2023-08-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/29/%E5%BF%83%E7%90%86%E5%AD%A6%C2%B7%E6%A2%A6%E7%9A%84%E8%A7%A3%E6%9E%90-%E5%BC%97%E6%B4%9B%E4%BC%8A%E5%BE%B7/" title="心理学-梦的解析·弗洛伊德">心理学-梦的解析·弗洛伊德</a><time datetime="2023-06-29T15:36:00.000Z" title="发表于 2023-06-29 23:36:00">2023-06-29</time></div></div></div></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%93%B2%E5%AD%A6/" style="font-size: 1.3em; color: #99a1ac">哲学</a> <a href="/tags/Android/" style="font-size: 1.5em; color: #99a9bf">Android</a> <a href="/tags/Common/" style="font-size: 1.2em; color: #999da3">Common</a> <a href="/tags/Leetcode/" style="font-size: 1.2em; color: #999da3">Leetcode</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/Reading/" style="font-size: 1.4em; color: #99a5b6">Reading</a> <a href="/tags/Typora/" style="font-size: 1.1em; color: #999">Typora</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 1.1em; color: #999">技术</a> <a href="/tags/%E5%BF%83%E7%90%86%E5%AD%A6/" style="font-size: 1.2em; color: #999da3">心理学</a> <a href="/tags/English/" style="font-size: 1.1em; color: #999">English</a> <a href="/tags/%E8%AE%A4%E7%9F%A5%E5%BF%83%E7%90%86%E5%AD%A6/" style="font-size: 1.1em; color: #999">认知心理学</a> <a href="/tags/%E5%8E%9F%E5%88%9B/" style="font-size: 1.1em; color: #999">原创</a> <a href="/tags/Hexo/" style="font-size: 1.1em; color: #999">Hexo</a> <a href="/tags/Java/" style="font-size: 1.2em; color: #999da3">Java</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/" style="font-size: 1.1em; color: #999">计算机</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
-    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">一月 2024</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/08/"><span class="card-archive-list-date">八月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/06/"><span class="card-archive-list-date">六月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/02/"><span class="card-archive-list-date">二月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/01/"><span class="card-archive-list-date">一月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/11/"><span class="card-archive-list-date">十一月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">十月 2022</span><span class="card-archive-list-count">2</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">41</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-02-28T03:23:05.889Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By xdd</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

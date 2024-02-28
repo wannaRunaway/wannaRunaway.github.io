@@ -1,164 +1,284 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Android-面向对象6大原则源码设计模式 | xdd</title><meta name="author" content="xdd"><meta name="copyright" content="xdd"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="单一职责原则——优化代码第一步Single Responsibility Principle, SRP. 就一个类而言，应该仅有一个能引起他变化的原因。最重要的是，要能划分一个类具体的职责，2个完全不同的功能代码不能放在同一个类中，会引起类文件冗余庞大，后面的代码会越来越难以维护，这是优化代码第一步。例如我们去写一个缓存图片的功能。 ​	1、下载图片 2、缓存图片 在这里基础的用3个类文件去写，d">
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="xdd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="单一职责原则——优化代码第一步Single Responsibility Principle, SRP. 就一个类而言，应该仅有一个能引起他变化的原因。最重要的是，要能划分一个类具体的职责，2个完全不同的功能代码不能放在同一个类中，会引起类文件冗余庞大，后面的代码会越来越难以维护，这是优化代码第一步。例如我们去写一个缓存图片的功能。 ​	1、下载图片 2、缓存图片 在这里基础的用3个类文件去写，d">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android-面向对象6大原则源码设计模式">
 <meta property="og:url" content="http://example.com/1979/11/30/Android-%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/index.html">
 <meta property="og:site_name" content="xdd">
 <meta property="og:description" content="单一职责原则——优化代码第一步Single Responsibility Principle, SRP. 就一个类而言，应该仅有一个能引起他变化的原因。最重要的是，要能划分一个类具体的职责，2个完全不同的功能代码不能放在同一个类中，会引起类文件冗余庞大，后面的代码会越来越难以维护，这是优化代码第一步。例如我们去写一个缓存图片的功能。 ​	1、下载图片 2、缓存图片 在这里基础的用3个类文件去写，d">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
 <meta property="article:published_time" content="1979-11-29T16:00:00.000Z">
 <meta property="article:modified_time" content="1979-11-29T16:00:00.000Z">
 <meta property="article:author" content="xdd">
 <meta property="article:tag" content="Android">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/1979/11/30/Android-%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
-  root: '/',
-  algolia: undefined,
-  localSearch: undefined,
-  translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
-  copy: {
-    success: '复制成功',
-    error: '复制错误',
-    noSupport: '浏览器不支持'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  dateSuffix: {
-    just: '刚刚',
-    min: '分钟前',
-    hour: '小时前',
-    day: '天前',
-    month: '个月前'
-  },
-  copyright: undefined,
-  lightbox: 'fancybox',
-  Snackbar: undefined,
-  infinitegrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
-    buttonText: '加载更多'
-  },
-  isPhotoFigcaption: false,
-  islazyload: false,
-  isAnchor: false,
-  percent: {
-    toc: true,
-    rightside: false,
-  },
-  autoDarkmode: false
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'Android-面向对象6大原则源码设计模式',
-  isPost: true,
-  isHome: false,
-  isHighlightShrink: false,
-  isToc: true,
-  postUpdate: '1979-11-30 00:00:00'
-}</script><script>(win=>{
-      win.saveToLocal = {
-        set: (key, value, ttl) => {
-          if (ttl === 0) return
-          const now = Date.now()
-          const expiry = now + ttl * 86400000
-          const item = {
-            value,
-            expiry
-          }
-          localStorage.setItem(key, JSON.stringify(item))
-        },
-      
-        get: key => {
-          const itemStr = localStorage.getItem(key)
-      
-          if (!itemStr) {
-            return undefined
-          }
-          const item = JSON.parse(itemStr)
-          const now = Date.now()
-      
-          if (now > item.expiry) {
-            localStorage.removeItem(key)
-            return undefined
-          }
-          return item.value
-        }
-      }
-    
-      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        script.onerror = reject
-        script.onload = script.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          script.onload = script.onreadystatechange = null
-          resolve()
-        }
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Android-面向对象6大原则源码设计模式 - xdd</title>
 
-        Object.keys(attr).forEach(key => {
-          script.setAttribute(key, attr[key])
-        })
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
-        document.head.appendChild(script)
-      })
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
     
-      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onerror = reject
-        link.onload = link.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          link.onload = link.onreadystatechange = null
-          resolve()
-        }
-        document.head.appendChild(link)
-      })
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>xdd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Android-面向对象6大原则源码设计模式"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
     
-      win.activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
     
-        if (t === 'dark') activateDarkMode()
-        else if (t === 'light') activateLightMode()
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="1979-11-30 00:00" pubdate>
+          1979年11月30日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
       
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
     
-      const detectApple = () => {
-        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-          document.documentElement.classList.add('apple')
-        }
-      }
-      detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="xdd"><span class="site-name">xdd</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Android-面向对象6大原则源码设计模式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="1979-11-29T16:00:00.000Z" title="发表于 1979-11-30 00:00:00">1979-11-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="1979-11-29T16:00:00.000Z" title="更新于 1979-11-30 00:00:00">1979-11-30</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Android-面向对象6大原则源码设计模式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="单一职责原则——优化代码第一步"><a href="#单一职责原则——优化代码第一步" class="headerlink" title="单一职责原则——优化代码第一步"></a>单一职责原则——优化代码第一步</h3><p>Single Responsibility Principle, SRP. 就一个类而言，应该仅有一个能引起他变化的原因。最重要的是，要能划分一个类具体的职责，2个完全不同的功能代码不能放在同一个类中，会引起类文件冗余庞大，后面的代码会越来越难以维护，这是优化代码第一步。例如我们去写一个缓存图片的功能。</p>
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Android-面向对象6大原则源码设计模式</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="单一职责原则——优化代码第一步"><a href="#单一职责原则——优化代码第一步" class="headerlink" title="单一职责原则——优化代码第一步"></a>单一职责原则——优化代码第一步</h3><p>Single Responsibility Principle, SRP. 就一个类而言，应该仅有一个能引起他变化的原因。最重要的是，要能划分一个类具体的职责，2个完全不同的功能代码不能放在同一个类中，会引起类文件冗余庞大，后面的代码会越来越难以维护，这是优化代码第一步。例如我们去写一个缓存图片的功能。</p>
 <p>​	<code>1、下载图片</code> <code>2、缓存图片</code></p>
 <p>在这里基础的用3个类文件去写，download、cache、tools，写在一个文件就会显得特别的大，这样后续开发看着就头大，找代码就要找半天，写3个文件非常简洁，可以在把这三个文件放到一个package里面去。这样不管开发还是后续维护都很容易。</p>
 <h3 id="开闭原则——-让程序稳定和灵活"><a href="#开闭原则——-让程序稳定和灵活" class="headerlink" title="开闭原则——-让程序稳定和灵活"></a>开闭原则——-让程序稳定和灵活</h3><p>Open Close Principle，OCP。代码文件对于修改是封闭的，但对于扩展是开放的。也就是说，尽可能的不去修改原来旧文件，因为一旦修改，别的对象调用会出现问题，因为你不知道这个函数方法在哪里调用会被调用几次（总不能一直点击去查看吧，或者写很多个注释）。但是对象调用肯定会使用到当前类文件，为了满足后续需求，所以他的拓展性是要开放的，一般使用接口满足拓展性。</p>
 <h3 id="里氏替换原则—–构建拓展性更好的系统"><a href="#里氏替换原则—–构建拓展性更好的系统" class="headerlink" title="里氏替换原则—–构建拓展性更好的系统"></a>里氏替换原则—–构建拓展性更好的系统</h3><p>所有引用基类的地方必须能透明的使用其子类的对象。面向对象的三大特性：封装、继承、多态。里氏替换原则就是基于多态和继承，只要父类出现的地方子类就可以出现，而且替换为子类也不会有任何的错误和异常。其实就是一种抽象。看下面一个例子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Window</span> <span class="variable">window</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Window</span>();</span><br><span class="line">        window.show(<span class="keyword">new</span> <span class="title class_">Button</span>());</span><br><span class="line">        window.show(<span class="keyword">new</span> <span class="title class_">TextView</span>());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Window</span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">show</span><span class="params">(View child)</span>&#123;</span><br><span class="line">            child.mesure();</span><br><span class="line">            child.draw();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//写一个抽象view,draw交给子类自己实现，mesure公用代码</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">View</span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">mesure</span><span class="params">()</span>&#123;</span><br><span class="line">            print(<span class="string">&quot;view mesure&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">draw</span><span class="params">()</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//写一个Button</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Button</span> <span class="keyword">extends</span> <span class="title class_">View</span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">draw</span><span class="params">()</span> &#123;</span><br><span class="line">            print(<span class="string">&quot;button draw&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//新建一个TextView文件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">TextView</span> <span class="keyword">extends</span> <span class="title class_">View</span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">draw</span><span class="params">()</span> &#123;</span><br><span class="line">            print(<span class="string">&quot;textview draw&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">print</span><span class="params">(String message)</span>&#123;</span><br><span class="line">        System.out.println(message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//执行结果</span></span><br><span class="line">view mesure</span><br><span class="line">button draw</span><br><span class="line">view mesure</span><br><span class="line">textview draw</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">Window</span> <span class="hljs-variable">window</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Window</span>();<br>        window.show(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Button</span>());<br>        window.show(<span class="hljs-keyword">new</span> <span class="hljs-title class_">TextView</span>());<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Window</span>&#123;<br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">show</span><span class="hljs-params">(View child)</span>&#123;<br>            child.mesure();<br>            child.draw();<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//写一个抽象view,draw交给子类自己实现，mesure公用代码</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">View</span>&#123;<br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">mesure</span><span class="hljs-params">()</span>&#123;<br>            print(<span class="hljs-string">&quot;view mesure&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">draw</span><span class="hljs-params">()</span>;<br>    &#125;<br>    <span class="hljs-comment">//写一个Button</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Button</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">View</span>&#123;<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">draw</span><span class="hljs-params">()</span> &#123;<br>            print(<span class="hljs-string">&quot;button draw&quot;</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//新建一个TextView文件</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TextView</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">View</span>&#123;<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">draw</span><span class="hljs-params">()</span> &#123;<br>            print(<span class="hljs-string">&quot;textview draw&quot;</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">print</span><span class="hljs-params">(String message)</span>&#123;<br>        System.out.println(message);<br>    &#125;<br>&#125;<br><span class="hljs-comment">//执行结果</span><br>view mesure<br>button draw<br>view mesure<br>textview draw<br></code></pre></td></tr></table></figure>
 
 <p><em>可以仔细看看这段代码，Window中的show(View child),在这里传入的是View的子类Button和Textview对象。</em></p>
 <ul>
@@ -195,4 +315,352 @@
 <p>这个实际应用也很广泛，多个文件相互通信时，不应该一股脑全部都写出来，而是确定一个方向，和当前类耦合度最低，调用的文件越少愈好。从mvp到mvvm不就是这样的设计模式🐎</p>
 </blockquote>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>应用实际开发中，最难的不是初始开发工作，而是后续的迭代和升级，越来越多的代码文件加入其中，类文件越来越臃肿时。这时候就是考验对这6大原则掌握的时候了，不管是重构还是新加入的文件，遵循这6大原则会让代码简介、清晰、灵活和稳定。所谓高内聚、低耦合和高扩展度就是如此。阅读Android源码设计模式第一步，就是必须对这些基本原理理解透彻。</strong></p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">xdd</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/1979/11/30/Android-%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/">http://example.com/1979/11/30/Android-%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">xdd</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/1979/11/30/Android-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="Android-源码中的单例模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Android-源码中的单例模式</div></div></a></div><div class="next-post pull-right"><a href="/1979/11/30/Android-%E4%BB%8ELayoutInflater-from-context-%E7%9C%8B%E6%BA%90%E7%A0%81/" title="Android-从LayoutInflater.from(context)看源码"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Android-从LayoutInflater.from(context)看源码</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/12/18/Android-Room%E5%92%8CViewmodelCoroutineLivedata%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8/" title="Android-Room和ViewmodelCoroutineLivedata配合使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-18</div><div class="title">Android-Room和ViewmodelCoroutineLivedata配合使用</div></div></a></div><div><a href="/2021/12/04/Android-SingleInstance%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="Android-SingleInstance单例模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-04</div><div class="title">Android-SingleInstance单例模式</div></div></a></div><div><a href="/2021/12/03/Android-Build%E6%A8%A1%E5%BC%8F/" title="Android-Build模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">Android-Build模式</div></div></a></div><div><a href="/2021/11/24/Android-delegate%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F/" title="Android-delegate委托模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-24</div><div class="title">Android-delegate委托模式</div></div></a></div><div><a href="/2021/12/04/Android-Factory%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="Android-Factory工厂模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-04</div><div class="title">Android-Factory工厂模式</div></div></a></div><div><a href="/2021/12/07/Android-ChainOfResponsibility%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" title="Android-ChainOfResponsibility责任链模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-07</div><div class="title">Android-ChainOfResponsibility责任链模式</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xdd</div><div class="author-info__description">xdd的个人博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99%E2%80%94%E2%80%94%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-number">1.</span> <span class="toc-text">单一职责原则——优化代码第一步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%E2%80%94%E2%80%94-%E8%AE%A9%E7%A8%8B%E5%BA%8F%E7%A8%B3%E5%AE%9A%E5%92%8C%E7%81%B5%E6%B4%BB"><span class="toc-number">2.</span> <span class="toc-text">开闭原则——-让程序稳定和灵活</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99%E2%80%94%E2%80%93%E6%9E%84%E5%BB%BA%E6%8B%93%E5%B1%95%E6%80%A7%E6%9B%B4%E5%A5%BD%E7%9A%84%E7%B3%BB%E7%BB%9F"><span class="toc-number">3.</span> <span class="toc-text">里氏替换原则—–构建拓展性更好的系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99%E2%80%94%E2%80%94%E8%AE%A9%E9%A1%B9%E7%9B%AE%E6%8B%A5%E6%9C%89%E5%8F%98%E6%8D%A2%E7%9A%84%E8%83%BD%E5%8A%9B"><span class="toc-number">4.</span> <span class="toc-text">依赖倒置原则——让项目拥有变换的能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99%E2%80%94%E2%80%94-%E7%B3%BB%E7%BB%9F%E6%8B%A5%E6%9C%89%E6%9B%B4%E9%AB%98%E7%9A%84%E7%81%B5%E6%B4%BB%E5%BA%A6"><span class="toc-number">5.</span> <span class="toc-text">接口隔离原则——-系统拥有更高的灵活度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%AA%E7%B1%B3%E7%89%B9%E5%8E%9F%E5%88%99%E2%80%94%E2%80%94%E6%9B%B4%E5%A5%BD%E7%9A%84%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7"><span class="toc-number">6.</span> <span class="toc-text">迪米特原则——更好的可扩展性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/26/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E-by%E5%90%B4%E5%86%9B/" title="计算机-数学之美-by吴军">计算机-数学之美-by吴军</a><time datetime="2024-02-26T08:59:00.000Z" title="发表于 2024-02-26 16:59:00">2024-02-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/22/%E8%AE%B0%E5%BD%95Hexo%E5%92%8Cgit%E4%BD%BF%E7%94%A8%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5-443%E9%97%AE%E9%A2%98/" title="记录Hexo和git使用无法连接-443问题.md">记录Hexo和git使用无法连接-443问题.md</a><time datetime="2024-01-22T03:30:30.000Z" title="发表于 2024-01-22 11:30:30">2024-01-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/12/test/" title="test">test</a><time datetime="2024-01-12T06:25:30.000Z" title="发表于 2024-01-12 14:25:30">2024-01-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/04/Reading-%E6%96%87%E5%8C%96%E8%BE%93%E5%87%BA%E8%AE%BA/" title="Reading-文化输出论">Reading-文化输出论</a><time datetime="2023-08-04T05:33:44.000Z" title="发表于 2023-08-04 13:33:44">2023-08-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/29/%E5%BF%83%E7%90%86%E5%AD%A6%C2%B7%E6%A2%A6%E7%9A%84%E8%A7%A3%E6%9E%90-%E5%BC%97%E6%B4%9B%E4%BC%8A%E5%BE%B7/" title="心理学-梦的解析·弗洛伊德">心理学-梦的解析·弗洛伊德</a><time datetime="2023-06-29T15:36:00.000Z" title="发表于 2023-06-29 23:36:00">2023-06-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By xdd</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/" class="print-no-link">#Android</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Android-面向对象6大原则源码设计模式</div>
+      <div>http://example.com/1979/11/30/Android-源码设计模式-面向对象6大原则/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>xdd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>1979年11月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/1979/11/30/Android-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="Android-源码中的单例模式">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Android-源码中的单例模式</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/1979/11/30/Android-%E4%BB%8ELayoutInflater-from-context-%E7%9C%8B%E6%BA%90%E7%A0%81/" title="Android-从LayoutInflater.from(context)看源码">
+                        <span class="hidden-mobile">Android-从LayoutInflater.from(context)看源码</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,190 +1,310 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Android-从LayoutInflater.from(context)看源码 | xdd</title><meta name="author" content="xdd"><meta name="copyright" content="xdd"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在Android中，我们经常通过Context获取系统级别的服务，比如WindowsManagerService、ActivityManagerService等，但我们今天使用RecyclerView.Adapter里面onCreateViewHolder来开始查看代码。 12345678910111213141516171819202122  @Override        public Ca">
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="xdd">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在Android中，我们经常通过Context获取系统级别的服务，比如WindowsManagerService、ActivityManagerService等，但我们今天使用RecyclerView.Adapter里面onCreateViewHolder来开始查看代码。 12345678910111213141516171819202122  @Override        public Ca">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android-从LayoutInflater.from(context)看源码">
 <meta property="og:url" content="http://example.com/1979/11/30/Android-%E4%BB%8ELayoutInflater-from-context-%E7%9C%8B%E6%BA%90%E7%A0%81/index.html">
 <meta property="og:site_name" content="xdd">
 <meta property="og:description" content="在Android中，我们经常通过Context获取系统级别的服务，比如WindowsManagerService、ActivityManagerService等，但我们今天使用RecyclerView.Adapter里面onCreateViewHolder来开始查看代码。 12345678910111213141516171819202122  @Override        public Ca">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
 <meta property="article:published_time" content="1979-11-29T16:00:00.000Z">
 <meta property="article:modified_time" content="1979-11-29T16:00:00.000Z">
 <meta property="article:author" content="xdd">
 <meta property="article:tag" content="Android">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/1979/11/30/Android-%E4%BB%8ELayoutInflater-from-context-%E7%9C%8B%E6%BA%90%E7%A0%81/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
-  root: '/',
-  algolia: undefined,
-  localSearch: undefined,
-  translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
-  copy: {
-    success: '复制成功',
-    error: '复制错误',
-    noSupport: '浏览器不支持'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  dateSuffix: {
-    just: '刚刚',
-    min: '分钟前',
-    hour: '小时前',
-    day: '天前',
-    month: '个月前'
-  },
-  copyright: undefined,
-  lightbox: 'fancybox',
-  Snackbar: undefined,
-  infinitegrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
-    buttonText: '加载更多'
-  },
-  isPhotoFigcaption: false,
-  islazyload: false,
-  isAnchor: false,
-  percent: {
-    toc: true,
-    rightside: false,
-  },
-  autoDarkmode: false
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'Android-从LayoutInflater.from(context)看源码',
-  isPost: true,
-  isHome: false,
-  isHighlightShrink: false,
-  isToc: false,
-  postUpdate: '1979-11-30 00:00:00'
-}</script><script>(win=>{
-      win.saveToLocal = {
-        set: (key, value, ttl) => {
-          if (ttl === 0) return
-          const now = Date.now()
-          const expiry = now + ttl * 86400000
-          const item = {
-            value,
-            expiry
-          }
-          localStorage.setItem(key, JSON.stringify(item))
-        },
-      
-        get: key => {
-          const itemStr = localStorage.getItem(key)
-      
-          if (!itemStr) {
-            return undefined
-          }
-          const item = JSON.parse(itemStr)
-          const now = Date.now()
-      
-          if (now > item.expiry) {
-            localStorage.removeItem(key)
-            return undefined
-          }
-          return item.value
-        }
-      }
-    
-      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.src = url
-        script.async = true
-        script.onerror = reject
-        script.onload = script.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          script.onload = script.onreadystatechange = null
-          resolve()
-        }
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Android-从LayoutInflater.from(context)看源码 - xdd</title>
 
-        Object.keys(attr).forEach(key => {
-          script.setAttribute(key, attr[key])
-        })
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
-        document.head.appendChild(script)
-      })
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
     
-      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = url
-        if (id) link.id = id
-        link.onerror = reject
-        link.onload = link.onreadystatechange = function() {
-          const loadState = this.readyState
-          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-          link.onload = link.onreadystatechange = null
-          resolve()
-        }
-        document.head.appendChild(link)
-      })
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>xdd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Android-从LayoutInflater.from(context)看源码"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
     
-      win.activateDarkMode = () => {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = () => {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
     
-        if (t === 'dark') activateDarkMode()
-        else if (t === 'light') activateLightMode()
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="1979-11-30 00:00" pubdate>
+          1979年11月30日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
       
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
     
-      const detectApple = () => {
-        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-          document.documentElement.classList.add('apple')
-        }
-      }
-      detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="xdd"><span class="site-name">xdd</span></a></span><div id="menus"><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Android-从LayoutInflater.from(context)看源码</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="1979-11-29T16:00:00.000Z" title="发表于 1979-11-30 00:00:00">1979-11-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="1979-11-29T16:00:00.000Z" title="更新于 1979-11-30 00:00:00">1979-11-30</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Android-从LayoutInflater.from(context)看源码"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在Android中，我们经常通过Context获取系统级别的服务，比如WindowsManagerService、ActivityManagerService等，但我们今天使用RecyclerView.Adapter里面onCreateViewHolder来开始查看代码。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">  <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> CarSelectorViewHolder <span class="title function_">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="type">int</span> viewType)</span> &#123;</span><br><span class="line">            <span class="type">View</span> <span class="variable">view</span> <span class="operator">=</span> LayoutInflater.from(context).inflate(R.layout.adapter_carselectdialog, <span class="literal">null</span>);</span><br><span class="line">            <span class="type">CarSelectorViewHolder</span> <span class="variable">holder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CarSelectorViewHolder</span>(view);</span><br><span class="line">            <span class="keyword">return</span> holder;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Obtains the LayoutInflater from the given context.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">	<span class="comment">//点进去发现是 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> LayoutInflater <span class="title function_">from</span><span class="params">(Context context)</span> &#123;</span><br><span class="line">        <span class="type">LayoutInflater</span> <span class="variable">LayoutInflater</span> <span class="operator">=</span></span><br><span class="line">                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);</span><br><span class="line">        <span class="keyword">if</span> (LayoutInflater == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AssertionError</span>(<span class="string">&quot;LayoutInflater not found.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> LayoutInflater;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//再次点击就是一个抽象方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="meta">@Nullable</span> Object <span class="title function_">getSystemService</span><span class="params">(<span class="meta">@ServiceName</span> <span class="meta">@NonNull</span> String name)</span>;</span><br></pre></td></tr></table></figure>
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Android-从LayoutInflater.from(context)看源码</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在Android中，我们经常通过Context获取系统级别的服务，比如WindowsManagerService、ActivityManagerService等，但我们今天使用RecyclerView.Adapter里面onCreateViewHolder来开始查看代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java">  <span class="hljs-meta">@Override</span><br>        <span class="hljs-keyword">public</span> CarSelectorViewHolder <span class="hljs-title function_">onCreateViewHolder</span><span class="hljs-params">(ViewGroup parent, <span class="hljs-type">int</span> viewType)</span> &#123;<br>            <span class="hljs-type">View</span> <span class="hljs-variable">view</span> <span class="hljs-operator">=</span> LayoutInflater.from(context).inflate(R.layout.adapter_carselectdialog, <span class="hljs-literal">null</span>);<br>            <span class="hljs-type">CarSelectorViewHolder</span> <span class="hljs-variable">holder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CarSelectorViewHolder</span>(view);<br>            <span class="hljs-keyword">return</span> holder;<br>        &#125;<br><br>  <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Obtains the LayoutInflater from the given context.</span><br><span class="hljs-comment">     */</span><br>	<span class="hljs-comment">//点进去发现是 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LayoutInflater <span class="hljs-title function_">from</span><span class="hljs-params">(Context context)</span> &#123;<br>        <span class="hljs-type">LayoutInflater</span> <span class="hljs-variable">LayoutInflater</span> <span class="hljs-operator">=</span><br>                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);<br>        <span class="hljs-keyword">if</span> (LayoutInflater == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AssertionError</span>(<span class="hljs-string">&quot;LayoutInflater not found.&quot;</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> LayoutInflater;<br>    &#125;<br><br><span class="hljs-comment">//再次点击就是一个抽象方法</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-meta">@Nullable</span> Object <span class="hljs-title function_">getSystemService</span><span class="hljs-params">(<span class="hljs-meta">@ServiceName</span> <span class="hljs-meta">@NonNull</span> String name)</span>;<br></code></pre></td></tr></table></figure>
 
 
 
 <p>下面就用Activity里面来分析</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">       Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, <span class="string">&quot;ActivityThreadMain&quot;</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// Install selective syscall interception</span></span><br><span class="line">       AndroidOs.install();</span><br><span class="line"></span><br><span class="line">       <span class="comment">// CloseGuard defaults to true and can be quite spammy.  We</span></span><br><span class="line">       <span class="comment">// disable it here, but selectively enable it later (via</span></span><br><span class="line">       <span class="comment">// StrictMode) on debug builds, but using DropBox, not logs.</span></span><br><span class="line">       CloseGuard.setEnabled(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">       Environment.initForCurrentUser();</span><br><span class="line"></span><br><span class="line">       <span class="comment">// Make sure TrustedCertificateStore looks in the right place for CA certificates</span></span><br><span class="line">       <span class="keyword">final</span> <span class="type">File</span> <span class="variable">configDir</span> <span class="operator">=</span> Environment.getUserConfigDirectory(UserHandle.myUserId());</span><br><span class="line">       TrustedCertificateStore.setDefaultUserDirectory(configDir);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// Call per-process mainline module initialization.</span></span><br><span class="line">       initializeMainlineModules();</span><br><span class="line"></span><br><span class="line">       Process.setArgV0(<span class="string">&quot;&lt;pre-initialized&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">       Looper.prepareMainLooper();</span><br><span class="line"></span><br><span class="line">       <span class="comment">// Find the value for &#123;@link #PROC_START_SEQ_IDENT&#125; if provided on the command line.</span></span><br><span class="line">       <span class="comment">// It will be in the format &quot;seq=114&quot;</span></span><br><span class="line">       <span class="type">long</span> <span class="variable">startSeq</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">if</span> (args != <span class="literal">null</span>) &#123;</span><br><span class="line">           <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> args.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">               <span class="keyword">if</span> (args[i] != <span class="literal">null</span> &amp;&amp; args[i].startsWith(PROC_START_SEQ_IDENT)) &#123;</span><br><span class="line">                   startSeq = Long.parseLong(</span><br><span class="line">                           args[i].substring(PROC_START_SEQ_IDENT.length()));</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="type">ActivityThread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ActivityThread</span>();</span><br><span class="line">       thread.attach(<span class="literal">false</span>, startSeq);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (sMainThreadHandler == <span class="literal">null</span>) &#123;</span><br><span class="line">           sMainThreadHandler = thread.getHandler();</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> (<span class="literal">false</span>) &#123;</span><br><span class="line">           Looper.myLooper().setMessageLogging(<span class="keyword">new</span></span><br><span class="line">                   <span class="title class_">LogPrinter</span>(Log.DEBUG, <span class="string">&quot;ActivityThread&quot;</span>));</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// End of event ActivityThreadMain.</span></span><br><span class="line">       Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</span><br><span class="line">       Looper.loop();</span><br><span class="line"></span><br><span class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Main thread loop unexpectedly exited&quot;</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>       Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, <span class="hljs-string">&quot;ActivityThreadMain&quot;</span>);<br><br>       <span class="hljs-comment">// Install selective syscall interception</span><br>       AndroidOs.install();<br><br>       <span class="hljs-comment">// CloseGuard defaults to true and can be quite spammy.  We</span><br>       <span class="hljs-comment">// disable it here, but selectively enable it later (via</span><br>       <span class="hljs-comment">// StrictMode) on debug builds, but using DropBox, not logs.</span><br>       CloseGuard.setEnabled(<span class="hljs-literal">false</span>);<br><br>       Environment.initForCurrentUser();<br><br>       <span class="hljs-comment">// Make sure TrustedCertificateStore looks in the right place for CA certificates</span><br>       <span class="hljs-keyword">final</span> <span class="hljs-type">File</span> <span class="hljs-variable">configDir</span> <span class="hljs-operator">=</span> Environment.getUserConfigDirectory(UserHandle.myUserId());<br>       TrustedCertificateStore.setDefaultUserDirectory(configDir);<br><br>       <span class="hljs-comment">// Call per-process mainline module initialization.</span><br>       initializeMainlineModules();<br><br>       Process.setArgV0(<span class="hljs-string">&quot;&lt;pre-initialized&gt;&quot;</span>);<br><br>       Looper.prepareMainLooper();<br><br>       <span class="hljs-comment">// Find the value for &#123;@link #PROC_START_SEQ_IDENT&#125; if provided on the command line.</span><br>       <span class="hljs-comment">// It will be in the format &quot;seq=114&quot;</span><br>       <span class="hljs-type">long</span> <span class="hljs-variable">startSeq</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>       <span class="hljs-keyword">if</span> (args != <span class="hljs-literal">null</span>) &#123;<br>           <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> args.length - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; --i) &#123;<br>               <span class="hljs-keyword">if</span> (args[i] != <span class="hljs-literal">null</span> &amp;&amp; args[i].startsWith(PROC_START_SEQ_IDENT)) &#123;<br>                   startSeq = Long.parseLong(<br>                           args[i].substring(PROC_START_SEQ_IDENT.length()));<br>               &#125;<br>           &#125;<br>       &#125;<br>       <span class="hljs-type">ActivityThread</span> <span class="hljs-variable">thread</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ActivityThread</span>();<br>       thread.attach(<span class="hljs-literal">false</span>, startSeq);<br><br>       <span class="hljs-keyword">if</span> (sMainThreadHandler == <span class="hljs-literal">null</span>) &#123;<br>           sMainThreadHandler = thread.getHandler();<br>       &#125;<br><br>       <span class="hljs-keyword">if</span> (<span class="hljs-literal">false</span>) &#123;<br>           Looper.myLooper().setMessageLogging(<span class="hljs-keyword">new</span><br>                   <span class="hljs-title class_">LogPrinter</span>(Log.DEBUG, <span class="hljs-string">&quot;ActivityThread&quot;</span>));<br>       &#125;<br><br>       <span class="hljs-comment">// End of event ActivityThreadMain.</span><br>       Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);<br>       Looper.loop();<br><br>       <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<span class="hljs-string">&quot;Main thread loop unexpectedly exited&quot;</span>);<br>   &#125;<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>1、创建ActivityThread，调用attach。主要看attach方法；</p>
 <p>2、looper.prepareMainLooper()，looper.loop()；</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">   <span class="meta">@UnsupportedAppUsage</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">attach</span><span class="params">(<span class="type">boolean</span> system, <span class="type">long</span> startSeq)</span> &#123;</span><br><span class="line">       sCurrentActivityThread = <span class="built_in">this</span>;</span><br><span class="line">       mSystemThread = system;</span><br><span class="line">       <span class="keyword">if</span> (!system) &#123;</span><br><span class="line">           android.ddm.DdmHandleAppName.setAppName(<span class="string">&quot;&lt;pre-initialized&gt;&quot;</span>,</span><br><span class="line">                                                   UserHandle.myUserId());</span><br><span class="line">           RuntimeInit.setApplicationObject(mAppThread.asBinder());</span><br><span class="line">           <span class="keyword">final</span> <span class="type">IActivityManager</span> <span class="variable">mgr</span> <span class="operator">=</span> ActivityManager.getService();</span><br><span class="line">           <span class="keyword">try</span> &#123;</span><br><span class="line">               mgr.attachApplication(mAppThread, startSeq);</span><br><span class="line">           &#125; <span class="keyword">catch</span> (RemoteException ex) &#123;</span><br><span class="line">               <span class="keyword">throw</span> ex.rethrowFromSystemServer();</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="comment">// Watch for getting close to heap limit.</span></span><br><span class="line">           BinderInternal.addGcWatcher(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">               <span class="meta">@Override</span> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                   <span class="keyword">if</span> (!mSomeActivitiesChanged) &#123;</span><br><span class="line">                       <span class="keyword">return</span>;</span><br><span class="line">                   &#125;</span><br><span class="line">                   <span class="type">Runtime</span> <span class="variable">runtime</span> <span class="operator">=</span> Runtime.getRuntime();</span><br><span class="line">                   <span class="type">long</span> <span class="variable">dalvikMax</span> <span class="operator">=</span> runtime.maxMemory();</span><br><span class="line">                   <span class="type">long</span> <span class="variable">dalvikUsed</span> <span class="operator">=</span> runtime.totalMemory() - runtime.freeMemory();</span><br><span class="line">                   <span class="keyword">if</span> (dalvikUsed &gt; ((<span class="number">3</span>*dalvikMax)/<span class="number">4</span>)) &#123;</span><br><span class="line">                       <span class="keyword">if</span> (DEBUG_MEMORY_TRIM) Slog.d(TAG, <span class="string">&quot;Dalvik max=&quot;</span> + (dalvikMax/<span class="number">1024</span>)</span><br><span class="line">                               + <span class="string">&quot; total=&quot;</span> + (runtime.totalMemory()/<span class="number">1024</span>)</span><br><span class="line">                               + <span class="string">&quot; used=&quot;</span> + (dalvikUsed/<span class="number">1024</span>));</span><br><span class="line">                       mSomeActivitiesChanged = <span class="literal">false</span>;</span><br><span class="line">                       <span class="keyword">try</span> &#123;</span><br><span class="line">                           ActivityTaskManager.getService().releaseSomeActivities(mAppThread);</span><br><span class="line">                       &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">                           <span class="keyword">throw</span> e.rethrowFromSystemServer();</span><br><span class="line">                       &#125;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="comment">// Don&#x27;t set application object here -- if the system crashes,</span></span><br><span class="line">           <span class="comment">// we can&#x27;t display an alert, we just want to die die die.</span></span><br><span class="line">           android.ddm.DdmHandleAppName.setAppName(<span class="string">&quot;system_process&quot;</span>,</span><br><span class="line">                   UserHandle.myUserId());</span><br><span class="line">           <span class="keyword">try</span> &#123;</span><br><span class="line">               mInstrumentation = <span class="keyword">new</span> <span class="title class_">Instrumentation</span>();</span><br><span class="line">               mInstrumentation.basicInit(<span class="built_in">this</span>);</span><br><span class="line">               <span class="type">ContextImpl</span> <span class="variable">context</span> <span class="operator">=</span> ContextImpl.createAppContext(</span><br><span class="line">                       <span class="built_in">this</span>, getSystemContext().mPackageInfo);</span><br><span class="line">               mInitialApplication = context.mPackageInfo.makeApplication(<span class="literal">true</span>, <span class="literal">null</span>);</span><br><span class="line">               mInitialApplication.onCreate();</span><br><span class="line">           &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(</span><br><span class="line">                       <span class="string">&quot;Unable to instantiate Application():&quot;</span> + e.toString(), e);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       ViewRootImpl.<span class="type">ConfigChangedCallback</span> <span class="variable">configChangedCallback</span></span><br><span class="line">               <span class="operator">=</span> (Configuration globalConfig) -&gt; &#123;</span><br><span class="line">           <span class="keyword">synchronized</span> (mResourcesManager) &#123;</span><br><span class="line">               <span class="comment">// TODO (b/135719017): Temporary log for debugging IME service.</span></span><br><span class="line">               <span class="keyword">if</span> (Build.IS_DEBUGGABLE &amp;&amp; mHasImeComponent) &#123;</span><br><span class="line">                   Log.d(TAG, <span class="string">&quot;ViewRootImpl.ConfigChangedCallback for IME, &quot;</span></span><br><span class="line">                           + <span class="string">&quot;config=&quot;</span> + globalConfig);</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">               <span class="comment">// We need to apply this change to the resources immediately, because upon returning</span></span><br><span class="line">               <span class="comment">// the view hierarchy will be informed about it.</span></span><br><span class="line">               <span class="keyword">if</span> (mResourcesManager.applyConfigurationToResourcesLocked(globalConfig,</span><br><span class="line">                       <span class="literal">null</span> <span class="comment">/* compat */</span>)) &#123;</span><br><span class="line">                   updateLocaleListFromAppContext(mInitialApplication.getApplicationContext(),</span><br><span class="line">                           mResourcesManager.getConfiguration().getLocales());</span><br><span class="line"></span><br><span class="line">                   <span class="comment">// This actually changed the resources! Tell everyone about it.</span></span><br><span class="line">                   <span class="keyword">if</span> (mPendingConfiguration == <span class="literal">null</span></span><br><span class="line">                           || mPendingConfiguration.isOtherSeqNewer(globalConfig)) &#123;</span><br><span class="line">                       mPendingConfiguration = globalConfig;</span><br><span class="line">                       sendMessage(H.CONFIGURATION_CHANGED, globalConfig);</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;;</span><br><span class="line">       ViewRootImpl.addConfigCallback(configChangedCallback);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@UnsupportedAppUsage</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> IActivityManager <span class="title function_">getService</span><span class="params">()</span> &#123;</span><br><span class="line">       <span class="keyword">return</span> IActivityManagerSingleton.get();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><code class="hljs java">   <span class="hljs-meta">@UnsupportedAppUsage</span><br>   <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">attach</span><span class="hljs-params">(<span class="hljs-type">boolean</span> system, <span class="hljs-type">long</span> startSeq)</span> &#123;<br>       sCurrentActivityThread = <span class="hljs-built_in">this</span>;<br>       mSystemThread = system;<br>       <span class="hljs-keyword">if</span> (!system) &#123;<br>           android.ddm.DdmHandleAppName.setAppName(<span class="hljs-string">&quot;&lt;pre-initialized&gt;&quot;</span>,<br>                                                   UserHandle.myUserId());<br>           RuntimeInit.setApplicationObject(mAppThread.asBinder());<br>           <span class="hljs-keyword">final</span> <span class="hljs-type">IActivityManager</span> <span class="hljs-variable">mgr</span> <span class="hljs-operator">=</span> ActivityManager.getService();<br>           <span class="hljs-keyword">try</span> &#123;<br>               mgr.attachApplication(mAppThread, startSeq);<br>           &#125; <span class="hljs-keyword">catch</span> (RemoteException ex) &#123;<br>               <span class="hljs-keyword">throw</span> ex.rethrowFromSystemServer();<br>           &#125;<br>           <span class="hljs-comment">// Watch for getting close to heap limit.</span><br>           BinderInternal.addGcWatcher(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Runnable</span>() &#123;<br>               <span class="hljs-meta">@Override</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>                   <span class="hljs-keyword">if</span> (!mSomeActivitiesChanged) &#123;<br>                       <span class="hljs-keyword">return</span>;<br>                   &#125;<br>                   <span class="hljs-type">Runtime</span> <span class="hljs-variable">runtime</span> <span class="hljs-operator">=</span> Runtime.getRuntime();<br>                   <span class="hljs-type">long</span> <span class="hljs-variable">dalvikMax</span> <span class="hljs-operator">=</span> runtime.maxMemory();<br>                   <span class="hljs-type">long</span> <span class="hljs-variable">dalvikUsed</span> <span class="hljs-operator">=</span> runtime.totalMemory() - runtime.freeMemory();<br>                   <span class="hljs-keyword">if</span> (dalvikUsed &gt; ((<span class="hljs-number">3</span>*dalvikMax)/<span class="hljs-number">4</span>)) &#123;<br>                       <span class="hljs-keyword">if</span> (DEBUG_MEMORY_TRIM) Slog.d(TAG, <span class="hljs-string">&quot;Dalvik max=&quot;</span> + (dalvikMax/<span class="hljs-number">1024</span>)<br>                               + <span class="hljs-string">&quot; total=&quot;</span> + (runtime.totalMemory()/<span class="hljs-number">1024</span>)<br>                               + <span class="hljs-string">&quot; used=&quot;</span> + (dalvikUsed/<span class="hljs-number">1024</span>));<br>                       mSomeActivitiesChanged = <span class="hljs-literal">false</span>;<br>                       <span class="hljs-keyword">try</span> &#123;<br>                           ActivityTaskManager.getService().releaseSomeActivities(mAppThread);<br>                       &#125; <span class="hljs-keyword">catch</span> (RemoteException e) &#123;<br>                           <span class="hljs-keyword">throw</span> e.rethrowFromSystemServer();<br>                       &#125;<br>                   &#125;<br>               &#125;<br>           &#125;);<br>       &#125; <span class="hljs-keyword">else</span> &#123;<br>           <span class="hljs-comment">// Don&#x27;t set application object here -- if the system crashes,</span><br>           <span class="hljs-comment">// we can&#x27;t display an alert, we just want to die die die.</span><br>           android.ddm.DdmHandleAppName.setAppName(<span class="hljs-string">&quot;system_process&quot;</span>,<br>                   UserHandle.myUserId());<br>           <span class="hljs-keyword">try</span> &#123;<br>               mInstrumentation = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Instrumentation</span>();<br>               mInstrumentation.basicInit(<span class="hljs-built_in">this</span>);<br>               <span class="hljs-type">ContextImpl</span> <span class="hljs-variable">context</span> <span class="hljs-operator">=</span> ContextImpl.createAppContext(<br>                       <span class="hljs-built_in">this</span>, getSystemContext().mPackageInfo);<br>               mInitialApplication = context.mPackageInfo.makeApplication(<span class="hljs-literal">true</span>, <span class="hljs-literal">null</span>);<br>               mInitialApplication.onCreate();<br>           &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>               <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<br>                       <span class="hljs-string">&quot;Unable to instantiate Application():&quot;</span> + e.toString(), e);<br>           &#125;<br>       &#125;<br><br>       ViewRootImpl.<span class="hljs-type">ConfigChangedCallback</span> <span class="hljs-variable">configChangedCallback</span><br>               <span class="hljs-operator">=</span> (Configuration globalConfig) -&gt; &#123;<br>           <span class="hljs-keyword">synchronized</span> (mResourcesManager) &#123;<br>               <span class="hljs-comment">// TODO (b/135719017): Temporary log for debugging IME service.</span><br>               <span class="hljs-keyword">if</span> (Build.IS_DEBUGGABLE &amp;&amp; mHasImeComponent) &#123;<br>                   Log.d(TAG, <span class="hljs-string">&quot;ViewRootImpl.ConfigChangedCallback for IME, &quot;</span><br>                           + <span class="hljs-string">&quot;config=&quot;</span> + globalConfig);<br>               &#125;<br><br>               <span class="hljs-comment">// We need to apply this change to the resources immediately, because upon returning</span><br>               <span class="hljs-comment">// the view hierarchy will be informed about it.</span><br>               <span class="hljs-keyword">if</span> (mResourcesManager.applyConfigurationToResourcesLocked(globalConfig,<br>                       <span class="hljs-literal">null</span> <span class="hljs-comment">/* compat */</span>)) &#123;<br>                   updateLocaleListFromAppContext(mInitialApplication.getApplicationContext(),<br>                           mResourcesManager.getConfiguration().getLocales());<br><br>                   <span class="hljs-comment">// This actually changed the resources! Tell everyone about it.</span><br>                   <span class="hljs-keyword">if</span> (mPendingConfiguration == <span class="hljs-literal">null</span><br>                           || mPendingConfiguration.isOtherSeqNewer(globalConfig)) &#123;<br>                       mPendingConfiguration = globalConfig;<br>                       sendMessage(H.CONFIGURATION_CHANGED, globalConfig);<br>                   &#125;<br>               &#125;<br>           &#125;<br>       &#125;;<br>       ViewRootImpl.addConfigCallback(configChangedCallback);<br>   &#125;<br><br><span class="hljs-meta">@UnsupportedAppUsage</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IActivityManager <span class="hljs-title function_">getService</span><span class="hljs-params">()</span> &#123;<br>       <span class="hljs-keyword">return</span> IActivityManagerSingleton.get();<br>   &#125;<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>ActivityManager.getService()获取到是一个IActivityManager单例</p>
 <p>attachApplication()调用在ActivityManagerService文件里面</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">attachApplication</span><span class="params">(IApplicationThread thread, <span class="type">long</span> startSeq)</span> &#123;</span><br><span class="line">       <span class="keyword">if</span> (thread == <span class="literal">null</span>) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">SecurityException</span>(<span class="string">&quot;Invalid application interface&quot;</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">           <span class="type">int</span> <span class="variable">callingPid</span> <span class="operator">=</span> Binder.getCallingPid();</span><br><span class="line">           <span class="keyword">final</span> <span class="type">int</span> <span class="variable">callingUid</span> <span class="operator">=</span> Binder.getCallingUid();</span><br><span class="line">           <span class="keyword">final</span> <span class="type">long</span> <span class="variable">origId</span> <span class="operator">=</span> Binder.clearCallingIdentity();</span><br><span class="line">           attachApplicationLocked(thread, callingPid, callingUid, startSeq);</span><br><span class="line">           Binder.restoreCallingIdentity(origId);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">attachApplication</span><span class="hljs-params">(IApplicationThread thread, <span class="hljs-type">long</span> startSeq)</span> &#123;<br>       <span class="hljs-keyword">if</span> (thread == <span class="hljs-literal">null</span>) &#123;<br>           <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SecurityException</span>(<span class="hljs-string">&quot;Invalid application interface&quot;</span>);<br>       &#125;<br>       <span class="hljs-keyword">synchronized</span> (<span class="hljs-built_in">this</span>) &#123;<br>           <span class="hljs-type">int</span> <span class="hljs-variable">callingPid</span> <span class="hljs-operator">=</span> Binder.getCallingPid();<br>           <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-variable">callingUid</span> <span class="hljs-operator">=</span> Binder.getCallingUid();<br>           <span class="hljs-keyword">final</span> <span class="hljs-type">long</span> <span class="hljs-variable">origId</span> <span class="hljs-operator">=</span> Binder.clearCallingIdentity();<br>           attachApplicationLocked(thread, callingPid, callingUid, startSeq);<br>           Binder.restoreCallingIdentity(origId);<br>       &#125;<br>   &#125;<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>Binder.restoreCallingIdentity(origId);是binder中的native方法</p>
 <p>attachApplicationLocked(thread, callingPid, callingUid, startSeq);</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Extended implementation of activity launch. Used when server requests a launch or relaunch.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Activity <span class="title function_">handleLaunchActivity</span><span class="params">(ActivityClientRecord r,</span></span><br><span class="line"><span class="params">        PendingTransactionActions pendingActions, Intent customIntent)</span> &#123;</span><br><span class="line">    <span class="comment">// If we are getting ready to gc after going to the background, well</span></span><br><span class="line">    <span class="comment">// we are back active so skip it.</span></span><br><span class="line">    unscheduleGcIdler();</span><br><span class="line">    mSomeActivitiesChanged = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (r.profilerInfo != <span class="literal">null</span>) &#123;</span><br><span class="line">        mProfiler.setProfiler(r.profilerInfo);</span><br><span class="line">        mProfiler.startProfiling();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Make sure we are running with the most recent config.</span></span><br><span class="line">    handleConfigurationChanged(<span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (localLOGV) Slog.v(</span><br><span class="line">        TAG, <span class="string">&quot;Handling launch of &quot;</span> + r);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Initialize before creating the activity</span></span><br><span class="line">    <span class="keyword">if</span> (!ThreadedRenderer.sRendererDisabled</span><br><span class="line">            &amp;&amp; (r.activityInfo.flags &amp; ActivityInfo.FLAG_HARDWARE_ACCELERATED) != <span class="number">0</span>) &#123;</span><br><span class="line">        HardwareRenderer.preload();</span><br><span class="line">    &#125;</span><br><span class="line">    WindowManagerGlobal.initialize();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Hint the GraphicsEnvironment that an activity is launching on the process.</span></span><br><span class="line">    GraphicsEnvironment.hintActivityLaunch();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="type">Activity</span> <span class="variable">a</span> <span class="operator">=</span> performLaunchActivity(r, customIntent);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (a != <span class="literal">null</span>) &#123;</span><br><span class="line">        r.createdConfig = <span class="keyword">new</span> <span class="title class_">Configuration</span>(mConfiguration);</span><br><span class="line">        reportSizeConfigurations(r);</span><br><span class="line">        <span class="keyword">if</span> (!r.activity.mFinished &amp;&amp; pendingActions != <span class="literal">null</span>) &#123;</span><br><span class="line">            pendingActions.setOldState(r.state);</span><br><span class="line">            pendingActions.setRestoreInstanceState(<span class="literal">true</span>);</span><br><span class="line">            pendingActions.setCallOnPostCreate(<span class="literal">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// If there was an error, for any reason, tell the activity manager to stop us.</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ActivityTaskManager.getService()</span><br><span class="line">                    .finishActivity(r.token, Activity.RESULT_CANCELED, <span class="literal">null</span>,</span><br><span class="line">                            Activity.DONT_FINISH_TASK_WITH_ACTIVITY);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (RemoteException ex) &#123;</span><br><span class="line">            <span class="keyword">throw</span> ex.rethrowFromSystemServer();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Extended implementation of activity launch. Used when server requests a launch or relaunch.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Activity <span class="hljs-title function_">handleLaunchActivity</span><span class="hljs-params">(ActivityClientRecord r,</span><br><span class="hljs-params">        PendingTransactionActions pendingActions, Intent customIntent)</span> &#123;<br>    <span class="hljs-comment">// If we are getting ready to gc after going to the background, well</span><br>    <span class="hljs-comment">// we are back active so skip it.</span><br>    unscheduleGcIdler();<br>    mSomeActivitiesChanged = <span class="hljs-literal">true</span>;<br><br>    <span class="hljs-keyword">if</span> (r.profilerInfo != <span class="hljs-literal">null</span>) &#123;<br>        mProfiler.setProfiler(r.profilerInfo);<br>        mProfiler.startProfiling();<br>    &#125;<br><br>    <span class="hljs-comment">// Make sure we are running with the most recent config.</span><br>    handleConfigurationChanged(<span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>);<br><br>    <span class="hljs-keyword">if</span> (localLOGV) Slog.v(<br>        TAG, <span class="hljs-string">&quot;Handling launch of &quot;</span> + r);<br><br>    <span class="hljs-comment">// Initialize before creating the activity</span><br>    <span class="hljs-keyword">if</span> (!ThreadedRenderer.sRendererDisabled<br>            &amp;&amp; (r.activityInfo.flags &amp; ActivityInfo.FLAG_HARDWARE_ACCELERATED) != <span class="hljs-number">0</span>) &#123;<br>        HardwareRenderer.preload();<br>    &#125;<br>    WindowManagerGlobal.initialize();<br><br>    <span class="hljs-comment">// Hint the GraphicsEnvironment that an activity is launching on the process.</span><br>    GraphicsEnvironment.hintActivityLaunch();<br><br>    <span class="hljs-keyword">final</span> <span class="hljs-type">Activity</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> performLaunchActivity(r, customIntent);<br><br>    <span class="hljs-keyword">if</span> (a != <span class="hljs-literal">null</span>) &#123;<br>        r.createdConfig = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Configuration</span>(mConfiguration);<br>        reportSizeConfigurations(r);<br>        <span class="hljs-keyword">if</span> (!r.activity.mFinished &amp;&amp; pendingActions != <span class="hljs-literal">null</span>) &#123;<br>            pendingActions.setOldState(r.state);<br>            pendingActions.setRestoreInstanceState(<span class="hljs-literal">true</span>);<br>            pendingActions.setCallOnPostCreate(<span class="hljs-literal">true</span>);<br>        &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// If there was an error, for any reason, tell the activity manager to stop us.</span><br>        <span class="hljs-keyword">try</span> &#123;<br>            ActivityTaskManager.getService()<br>                    .finishActivity(r.token, Activity.RESULT_CANCELED, <span class="hljs-literal">null</span>,<br>                            Activity.DONT_FINISH_TASK_WITH_ACTIVITY);<br>        &#125; <span class="hljs-keyword">catch</span> (RemoteException ex) &#123;<br>            <span class="hljs-keyword">throw</span> ex.rethrowFromSystemServer();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> a;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p> handleConfigurationChanged()、WindowManagerGlobal.initialize()和GraphicsEnvironment.hintActivityLaunch()等方法；</p>
 <p>performLaunchActivity()；</p>
 </blockquote>
 <p><strong>构建activity核心代码，performLaunchActivity</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**  Core implementation of activity launch. */</span></span><br><span class="line">  <span class="keyword">private</span> Activity <span class="title function_">performLaunchActivity</span><span class="params">(ActivityClientRecord r, Intent customIntent)</span> &#123;</span><br><span class="line">      <span class="type">ActivityInfo</span> <span class="variable">aInfo</span> <span class="operator">=</span> r.activityInfo;</span><br><span class="line">      <span class="keyword">if</span> (r.packageInfo == <span class="literal">null</span>) &#123;</span><br><span class="line">          r.packageInfo = getPackageInfo(aInfo.applicationInfo, r.compatInfo,</span><br><span class="line">                  Context.CONTEXT_INCLUDE_CODE);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="type">ComponentName</span> <span class="variable">component</span> <span class="operator">=</span> r.intent.getComponent();</span><br><span class="line">      <span class="keyword">if</span> (component == <span class="literal">null</span>) &#123;</span><br><span class="line">          component = r.intent.resolveActivity(</span><br><span class="line">              mInitialApplication.getPackageManager());</span><br><span class="line">          r.intent.setComponent(component);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (r.activityInfo.targetActivity != <span class="literal">null</span>) &#123;</span><br><span class="line">          component = <span class="keyword">new</span> <span class="title class_">ComponentName</span>(r.activityInfo.packageName,</span><br><span class="line">                  r.activityInfo.targetActivity);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="type">ContextImpl</span> <span class="variable">appContext</span> <span class="operator">=</span> createBaseContextForActivity(r);</span><br><span class="line">      <span class="type">Activity</span> <span class="variable">activity</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          java.lang.<span class="type">ClassLoader</span> <span class="variable">cl</span> <span class="operator">=</span> appContext.getClassLoader();</span><br><span class="line">          activity = mInstrumentation.newActivity(</span><br><span class="line">                  cl, component.getClassName(), r.intent);</span><br><span class="line">          StrictMode.incrementExpectedActivityCount(activity.getClass());</span><br><span class="line">          r.intent.setExtrasClassLoader(cl);</span><br><span class="line">          r.intent.prepareToEnterProcess();</span><br><span class="line">          <span class="keyword">if</span> (r.state != <span class="literal">null</span>) &#123;</span><br><span class="line">              r.state.setClassLoader(cl);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">          <span class="keyword">if</span> (!mInstrumentation.onException(activity, e)) &#123;</span><br><span class="line">              <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(</span><br><span class="line">                  <span class="string">&quot;Unable to instantiate activity &quot;</span> + component</span><br><span class="line">                  + <span class="string">&quot;: &quot;</span> + e.toString(), e);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="type">Application</span> <span class="variable">app</span> <span class="operator">=</span> r.packageInfo.makeApplication(<span class="literal">false</span>, mInstrumentation);</span><br><span class="line"></span><br><span class="line">          <span class="keyword">if</span> (localLOGV) Slog.v(TAG, <span class="string">&quot;Performing launch of &quot;</span> + r);</span><br><span class="line">          <span class="keyword">if</span> (localLOGV) Slog.v(</span><br><span class="line">                  TAG, r + <span class="string">&quot;: app=&quot;</span> + app</span><br><span class="line">                  + <span class="string">&quot;, appName=&quot;</span> + app.getPackageName()</span><br><span class="line">                  + <span class="string">&quot;, pkg=&quot;</span> + r.packageInfo.getPackageName()</span><br><span class="line">                  + <span class="string">&quot;, comp=&quot;</span> + r.intent.getComponent().toShortString()</span><br><span class="line">                  + <span class="string">&quot;, dir=&quot;</span> + r.packageInfo.getAppDir());</span><br><span class="line"></span><br><span class="line">          <span class="keyword">if</span> (activity != <span class="literal">null</span>) &#123;</span><br><span class="line">              <span class="type">CharSequence</span> <span class="variable">title</span> <span class="operator">=</span> r.activityInfo.loadLabel(appContext.getPackageManager());</span><br><span class="line">              <span class="type">Configuration</span> <span class="variable">config</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Configuration</span>(mCompatConfiguration);</span><br><span class="line">              <span class="keyword">if</span> (r.overrideConfig != <span class="literal">null</span>) &#123;</span><br><span class="line">                  config.updateFrom(r.overrideConfig);</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">if</span> (DEBUG_CONFIGURATION) Slog.v(TAG, <span class="string">&quot;Launching activity &quot;</span></span><br><span class="line">                      + r.activityInfo.name + <span class="string">&quot; with config &quot;</span> + config);</span><br><span class="line">              <span class="type">Window</span> <span class="variable">window</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">              <span class="keyword">if</span> (r.mPendingRemoveWindow != <span class="literal">null</span> &amp;&amp; r.mPreserveWindow) &#123;</span><br><span class="line">                  window = r.mPendingRemoveWindow;</span><br><span class="line">                  r.mPendingRemoveWindow = <span class="literal">null</span>;</span><br><span class="line">                  r.mPendingRemoveWindowManager = <span class="literal">null</span>;</span><br><span class="line">              &#125;</span><br><span class="line"></span><br><span class="line">              <span class="comment">// Activity resources must be initialized with the same loaders as the</span></span><br><span class="line">              <span class="comment">// application context.</span></span><br><span class="line">              appContext.getResources().addLoaders(</span><br><span class="line">                      app.getResources().getLoaders().toArray(<span class="keyword">new</span> <span class="title class_">ResourcesLoader</span>[<span class="number">0</span>]));</span><br><span class="line"></span><br><span class="line">              appContext.setOuterContext(activity);</span><br><span class="line">              activity.attach(appContext, <span class="built_in">this</span>, getInstrumentation(), r.token,</span><br><span class="line">                      r.ident, app, r.intent, r.activityInfo, title, r.parent,</span><br><span class="line">                      r.embeddedID, r.lastNonConfigurationInstances, config,</span><br><span class="line">                      r.referrer, r.voiceInteractor, window, r.configCallback,</span><br><span class="line">                      r.assistToken);</span><br><span class="line"></span><br><span class="line">              <span class="keyword">if</span> (customIntent != <span class="literal">null</span>) &#123;</span><br><span class="line">                  activity.mIntent = customIntent;</span><br><span class="line">              &#125;</span><br><span class="line">              r.lastNonConfigurationInstances = <span class="literal">null</span>;</span><br><span class="line">              checkAndBlockForNetworkAccess();</span><br><span class="line">              activity.mStartedActivity = <span class="literal">false</span>;</span><br><span class="line">              <span class="type">int</span> <span class="variable">theme</span> <span class="operator">=</span> r.activityInfo.getThemeResource();</span><br><span class="line">              <span class="keyword">if</span> (theme != <span class="number">0</span>) &#123;</span><br><span class="line">                  activity.setTheme(theme);</span><br><span class="line">              &#125;</span><br><span class="line"></span><br><span class="line">              activity.mCalled = <span class="literal">false</span>;</span><br><span class="line">              <span class="keyword">if</span> (r.isPersistable()) &#123;</span><br><span class="line">                  mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState);</span><br><span class="line">              &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                  mInstrumentation.callActivityOnCreate(activity, r.state);</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">if</span> (!activity.mCalled) &#123;</span><br><span class="line">                  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">SuperNotCalledException</span>(</span><br><span class="line">                      <span class="string">&quot;Activity &quot;</span> + r.intent.getComponent().toShortString() +</span><br><span class="line">                      <span class="string">&quot; did not call through to super.onCreate()&quot;</span>);</span><br><span class="line">              &#125;</span><br><span class="line">              r.activity = activity;</span><br><span class="line">              mLastReportedWindowingMode.put(activity.getActivityToken(),</span><br><span class="line">                      config.windowConfiguration.getWindowingMode());</span><br><span class="line">          &#125;</span><br><span class="line">          r.setState(ON_CREATE);</span><br><span class="line"></span><br><span class="line">          <span class="comment">// updatePendingActivityConfiguration() reads from mActivities to update</span></span><br><span class="line">          <span class="comment">// ActivityClientRecord which runs in a different thread. Protect modifications to</span></span><br><span class="line">          <span class="comment">// mActivities to avoid race.</span></span><br><span class="line">          <span class="keyword">synchronized</span> (mResourcesManager) &#123;</span><br><span class="line">              mActivities.put(r.token, r);</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">catch</span> (SuperNotCalledException e) &#123;</span><br><span class="line">          <span class="keyword">throw</span> e;</span><br><span class="line"></span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">          <span class="keyword">if</span> (!mInstrumentation.onException(activity, e)) &#123;</span><br><span class="line">              <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(</span><br><span class="line">                  <span class="string">&quot;Unable to start activity &quot;</span> + component</span><br><span class="line">                  + <span class="string">&quot;: &quot;</span> + e.toString(), e);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> activity;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**  Core implementation of activity launch. */</span><br>  <span class="hljs-keyword">private</span> Activity <span class="hljs-title function_">performLaunchActivity</span><span class="hljs-params">(ActivityClientRecord r, Intent customIntent)</span> &#123;<br>      <span class="hljs-type">ActivityInfo</span> <span class="hljs-variable">aInfo</span> <span class="hljs-operator">=</span> r.activityInfo;<br>      <span class="hljs-keyword">if</span> (r.packageInfo == <span class="hljs-literal">null</span>) &#123;<br>          r.packageInfo = getPackageInfo(aInfo.applicationInfo, r.compatInfo,<br>                  Context.CONTEXT_INCLUDE_CODE);<br>      &#125;<br><br>      <span class="hljs-type">ComponentName</span> <span class="hljs-variable">component</span> <span class="hljs-operator">=</span> r.intent.getComponent();<br>      <span class="hljs-keyword">if</span> (component == <span class="hljs-literal">null</span>) &#123;<br>          component = r.intent.resolveActivity(<br>              mInitialApplication.getPackageManager());<br>          r.intent.setComponent(component);<br>      &#125;<br><br>      <span class="hljs-keyword">if</span> (r.activityInfo.targetActivity != <span class="hljs-literal">null</span>) &#123;<br>          component = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ComponentName</span>(r.activityInfo.packageName,<br>                  r.activityInfo.targetActivity);<br>      &#125;<br><br>      <span class="hljs-type">ContextImpl</span> <span class="hljs-variable">appContext</span> <span class="hljs-operator">=</span> createBaseContextForActivity(r);<br>      <span class="hljs-type">Activity</span> <span class="hljs-variable">activity</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>      <span class="hljs-keyword">try</span> &#123;<br>          java.lang.<span class="hljs-type">ClassLoader</span> <span class="hljs-variable">cl</span> <span class="hljs-operator">=</span> appContext.getClassLoader();<br>          activity = mInstrumentation.newActivity(<br>                  cl, component.getClassName(), r.intent);<br>          StrictMode.incrementExpectedActivityCount(activity.getClass());<br>          r.intent.setExtrasClassLoader(cl);<br>          r.intent.prepareToEnterProcess();<br>          <span class="hljs-keyword">if</span> (r.state != <span class="hljs-literal">null</span>) &#123;<br>              r.state.setClassLoader(cl);<br>          &#125;<br>      &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>          <span class="hljs-keyword">if</span> (!mInstrumentation.onException(activity, e)) &#123;<br>              <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<br>                  <span class="hljs-string">&quot;Unable to instantiate activity &quot;</span> + component<br>                  + <span class="hljs-string">&quot;: &quot;</span> + e.toString(), e);<br>          &#125;<br>      &#125;<br><br>      <span class="hljs-keyword">try</span> &#123;<br>          <span class="hljs-type">Application</span> <span class="hljs-variable">app</span> <span class="hljs-operator">=</span> r.packageInfo.makeApplication(<span class="hljs-literal">false</span>, mInstrumentation);<br><br>          <span class="hljs-keyword">if</span> (localLOGV) Slog.v(TAG, <span class="hljs-string">&quot;Performing launch of &quot;</span> + r);<br>          <span class="hljs-keyword">if</span> (localLOGV) Slog.v(<br>                  TAG, r + <span class="hljs-string">&quot;: app=&quot;</span> + app<br>                  + <span class="hljs-string">&quot;, appName=&quot;</span> + app.getPackageName()<br>                  + <span class="hljs-string">&quot;, pkg=&quot;</span> + r.packageInfo.getPackageName()<br>                  + <span class="hljs-string">&quot;, comp=&quot;</span> + r.intent.getComponent().toShortString()<br>                  + <span class="hljs-string">&quot;, dir=&quot;</span> + r.packageInfo.getAppDir());<br><br>          <span class="hljs-keyword">if</span> (activity != <span class="hljs-literal">null</span>) &#123;<br>              <span class="hljs-type">CharSequence</span> <span class="hljs-variable">title</span> <span class="hljs-operator">=</span> r.activityInfo.loadLabel(appContext.getPackageManager());<br>              <span class="hljs-type">Configuration</span> <span class="hljs-variable">config</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Configuration</span>(mCompatConfiguration);<br>              <span class="hljs-keyword">if</span> (r.overrideConfig != <span class="hljs-literal">null</span>) &#123;<br>                  config.updateFrom(r.overrideConfig);<br>              &#125;<br>              <span class="hljs-keyword">if</span> (DEBUG_CONFIGURATION) Slog.v(TAG, <span class="hljs-string">&quot;Launching activity &quot;</span><br>                      + r.activityInfo.name + <span class="hljs-string">&quot; with config &quot;</span> + config);<br>              <span class="hljs-type">Window</span> <span class="hljs-variable">window</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>              <span class="hljs-keyword">if</span> (r.mPendingRemoveWindow != <span class="hljs-literal">null</span> &amp;&amp; r.mPreserveWindow) &#123;<br>                  window = r.mPendingRemoveWindow;<br>                  r.mPendingRemoveWindow = <span class="hljs-literal">null</span>;<br>                  r.mPendingRemoveWindowManager = <span class="hljs-literal">null</span>;<br>              &#125;<br><br>              <span class="hljs-comment">// Activity resources must be initialized with the same loaders as the</span><br>              <span class="hljs-comment">// application context.</span><br>              appContext.getResources().addLoaders(<br>                      app.getResources().getLoaders().toArray(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ResourcesLoader</span>[<span class="hljs-number">0</span>]));<br><br>              appContext.setOuterContext(activity);<br>              activity.attach(appContext, <span class="hljs-built_in">this</span>, getInstrumentation(), r.token,<br>                      r.ident, app, r.intent, r.activityInfo, title, r.parent,<br>                      r.embeddedID, r.lastNonConfigurationInstances, config,<br>                      r.referrer, r.voiceInteractor, window, r.configCallback,<br>                      r.assistToken);<br><br>              <span class="hljs-keyword">if</span> (customIntent != <span class="hljs-literal">null</span>) &#123;<br>                  activity.mIntent = customIntent;<br>              &#125;<br>              r.lastNonConfigurationInstances = <span class="hljs-literal">null</span>;<br>              checkAndBlockForNetworkAccess();<br>              activity.mStartedActivity = <span class="hljs-literal">false</span>;<br>              <span class="hljs-type">int</span> <span class="hljs-variable">theme</span> <span class="hljs-operator">=</span> r.activityInfo.getThemeResource();<br>              <span class="hljs-keyword">if</span> (theme != <span class="hljs-number">0</span>) &#123;<br>                  activity.setTheme(theme);<br>              &#125;<br><br>              activity.mCalled = <span class="hljs-literal">false</span>;<br>              <span class="hljs-keyword">if</span> (r.isPersistable()) &#123;<br>                  mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState);<br>              &#125; <span class="hljs-keyword">else</span> &#123;<br>                  mInstrumentation.callActivityOnCreate(activity, r.state);<br>              &#125;<br>              <span class="hljs-keyword">if</span> (!activity.mCalled) &#123;<br>                  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SuperNotCalledException</span>(<br>                      <span class="hljs-string">&quot;Activity &quot;</span> + r.intent.getComponent().toShortString() +<br>                      <span class="hljs-string">&quot; did not call through to super.onCreate()&quot;</span>);<br>              &#125;<br>              r.activity = activity;<br>              mLastReportedWindowingMode.put(activity.getActivityToken(),<br>                      config.windowConfiguration.getWindowingMode());<br>          &#125;<br>          r.setState(ON_CREATE);<br><br>          <span class="hljs-comment">// updatePendingActivityConfiguration() reads from mActivities to update</span><br>          <span class="hljs-comment">// ActivityClientRecord which runs in a different thread. Protect modifications to</span><br>          <span class="hljs-comment">// mActivities to avoid race.</span><br>          <span class="hljs-keyword">synchronized</span> (mResourcesManager) &#123;<br>              mActivities.put(r.token, r);<br>          &#125;<br><br>      &#125; <span class="hljs-keyword">catch</span> (SuperNotCalledException e) &#123;<br>          <span class="hljs-keyword">throw</span> e;<br><br>      &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>          <span class="hljs-keyword">if</span> (!mInstrumentation.onException(activity, e)) &#123;<br>              <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(<br>                  <span class="hljs-string">&quot;Unable to start activity &quot;</span> + component<br>                  + <span class="hljs-string">&quot;: &quot;</span> + e.toString(), e);<br>          &#125;<br>      &#125;<br><br>      <span class="hljs-keyword">return</span> activity;<br>  &#125;<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>1、activity &#x3D; mInstrumentation.newActivity(cl, component.getClassName(), r.intent); 创建activity</p>
@@ -193,7 +313,7 @@
 <p>4、activity.attach()把window application window context 都加入</p>
 <p>5、mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState); </p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ContextImpl <span class="title function_">createBaseContextForActivity</span><span class="params">(ActivityClientRecord r)</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">int</span> displayId;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        displayId = ActivityTaskManager.getService().getDisplayId(r.token);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> e.rethrowFromSystemServer();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">ContextImpl</span> <span class="variable">appContext</span> <span class="operator">=</span> ContextImpl.createActivityContext(</span><br><span class="line">            <span class="built_in">this</span>, r.packageInfo, r.activityInfo, r.token, displayId, r.overrideConfig);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// The rotation adjustments must be applied before creating the activity, so the activity</span></span><br><span class="line">    <span class="comment">// can get the adjusted display info during creation.</span></span><br><span class="line">    <span class="keyword">if</span> (r.mPendingFixedRotationAdjustments != <span class="literal">null</span>) &#123;</span><br><span class="line">        handleFixedRotationAdjustments(r.token, r.mPendingFixedRotationAdjustments,</span><br><span class="line">                r.overrideConfig);</span><br><span class="line">        r.mPendingFixedRotationAdjustments = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="type">DisplayManagerGlobal</span> <span class="variable">dm</span> <span class="operator">=</span> DisplayManagerGlobal.getInstance();</span><br><span class="line">    <span class="comment">// For debugging purposes, if the activity&#x27;s package name contains the value of</span></span><br><span class="line">    <span class="comment">// the &quot;debug.use-second-display&quot; system property as a substring, then show</span></span><br><span class="line">    <span class="comment">// its content on a secondary display if there is one.</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">pkgName</span> <span class="operator">=</span> SystemProperties.get(<span class="string">&quot;debug.second-display.pkg&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (pkgName != <span class="literal">null</span> &amp;&amp; !pkgName.isEmpty()</span><br><span class="line">            &amp;&amp; r.packageInfo.mPackageName.contains(pkgName)) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> id : dm.getDisplayIds()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (id != Display.DEFAULT_DISPLAY) &#123;</span><br><span class="line">                <span class="type">Display</span> <span class="variable">display</span> <span class="operator">=</span></span><br><span class="line">                        dm.getCompatibleDisplay(id, appContext.getResources());</span><br><span class="line">                appContext = (ContextImpl) appContext.createDisplayContext(display);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> appContext;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> ContextImpl <span class="hljs-title function_">createBaseContextForActivity</span><span class="hljs-params">(ActivityClientRecord r)</span> &#123;<br>    <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> displayId;<br>    <span class="hljs-keyword">try</span> &#123;<br>        displayId = ActivityTaskManager.getService().getDisplayId(r.token);<br>    &#125; <span class="hljs-keyword">catch</span> (RemoteException e) &#123;<br>        <span class="hljs-keyword">throw</span> e.rethrowFromSystemServer();<br>    &#125;<br><br>    <span class="hljs-type">ContextImpl</span> <span class="hljs-variable">appContext</span> <span class="hljs-operator">=</span> ContextImpl.createActivityContext(<br>            <span class="hljs-built_in">this</span>, r.packageInfo, r.activityInfo, r.token, displayId, r.overrideConfig);<br><br>    <span class="hljs-comment">// The rotation adjustments must be applied before creating the activity, so the activity</span><br>    <span class="hljs-comment">// can get the adjusted display info during creation.</span><br>    <span class="hljs-keyword">if</span> (r.mPendingFixedRotationAdjustments != <span class="hljs-literal">null</span>) &#123;<br>        handleFixedRotationAdjustments(r.token, r.mPendingFixedRotationAdjustments,<br>                r.overrideConfig);<br>        r.mPendingFixedRotationAdjustments = <span class="hljs-literal">null</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">final</span> <span class="hljs-type">DisplayManagerGlobal</span> <span class="hljs-variable">dm</span> <span class="hljs-operator">=</span> DisplayManagerGlobal.getInstance();<br>    <span class="hljs-comment">// For debugging purposes, if the activity&#x27;s package name contains the value of</span><br>    <span class="hljs-comment">// the &quot;debug.use-second-display&quot; system property as a substring, then show</span><br>    <span class="hljs-comment">// its content on a secondary display if there is one.</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">pkgName</span> <span class="hljs-operator">=</span> SystemProperties.get(<span class="hljs-string">&quot;debug.second-display.pkg&quot;</span>);<br>    <span class="hljs-keyword">if</span> (pkgName != <span class="hljs-literal">null</span> &amp;&amp; !pkgName.isEmpty()<br>            &amp;&amp; r.packageInfo.mPackageName.contains(pkgName)) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> id : dm.getDisplayIds()) &#123;<br>            <span class="hljs-keyword">if</span> (id != Display.DEFAULT_DISPLAY) &#123;<br>                <span class="hljs-type">Display</span> <span class="hljs-variable">display</span> <span class="hljs-operator">=</span><br>                        dm.getCompatibleDisplay(id, appContext.getResources());<br>                appContext = (ContextImpl) appContext.createDisplayContext(display);<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> appContext;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>1、  ContextImpl appContext &#x3D; ContextImpl.createActivityContext(<br>                this, r.packageInfo, r.activityInfo, r.token, displayId, r.overrideConfig);</p>
@@ -201,4 +321,352 @@
 <p>3、无论如何，都会使用到contextimpl这个类。</p>
 <p>从contextImpl看出，虚拟机第一次加载类事会注册各种ServiceFatcher,这些服务以键值队形式存在HashMap中，用户先根据key找到ServiceFetcher,然后通过ServiceFetcher createService获取具体的服务对象。第一次获取时，会将该对象缓存到一个列表中。</p>
 </blockquote>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">xdd</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/1979/11/30/Android-%E4%BB%8ELayoutInflater-from-context-%E7%9C%8B%E6%BA%90%E7%A0%81/">http://example.com/1979/11/30/Android-%E4%BB%8ELayoutInflater-from-context-%E7%9C%8B%E6%BA%90%E7%A0%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">xdd</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Android/">Android</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/1979/11/30/Android-%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/" title="Android-面向对象6大原则源码设计模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Android-面向对象6大原则源码设计模式</div></div></a></div><div class="next-post pull-right"><a href="/1979/11/30/English-%E6%89%BE%E5%AF%B9%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E6%B3%95%E7%9A%84%E7%AC%AC%E4%B8%80%E6%9C%AC%E4%B9%A6/" title="English-找对英语学习法第一本书"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">English-找对英语学习法第一本书</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/12/18/Android-Room%E5%92%8CViewmodelCoroutineLivedata%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8/" title="Android-Room和ViewmodelCoroutineLivedata配合使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-18</div><div class="title">Android-Room和ViewmodelCoroutineLivedata配合使用</div></div></a></div><div><a href="/2021/12/04/Android-SingleInstance%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" title="Android-SingleInstance单例模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-04</div><div class="title">Android-SingleInstance单例模式</div></div></a></div><div><a href="/2021/12/03/Android-Build%E6%A8%A1%E5%BC%8F/" title="Android-Build模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-03</div><div class="title">Android-Build模式</div></div></a></div><div><a href="/2021/11/24/Android-delegate%E5%A7%94%E6%89%98%E6%A8%A1%E5%BC%8F/" title="Android-delegate委托模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-24</div><div class="title">Android-delegate委托模式</div></div></a></div><div><a href="/2021/12/04/Android-Factory%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" title="Android-Factory工厂模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-04</div><div class="title">Android-Factory工厂模式</div></div></a></div><div><a href="/2021/12/07/Android-ChainOfResponsibility%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" title="Android-ChainOfResponsibility责任链模式"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-07</div><div class="title">Android-ChainOfResponsibility责任链模式</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xdd</div><div class="author-info__description">xdd的个人博客</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/26/%E8%AE%A1%E7%AE%97%E6%9C%BA-%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BE%8E-by%E5%90%B4%E5%86%9B/" title="计算机-数学之美-by吴军">计算机-数学之美-by吴军</a><time datetime="2024-02-26T08:59:00.000Z" title="发表于 2024-02-26 16:59:00">2024-02-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/22/%E8%AE%B0%E5%BD%95Hexo%E5%92%8Cgit%E4%BD%BF%E7%94%A8%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5-443%E9%97%AE%E9%A2%98/" title="记录Hexo和git使用无法连接-443问题.md">记录Hexo和git使用无法连接-443问题.md</a><time datetime="2024-01-22T03:30:30.000Z" title="发表于 2024-01-22 11:30:30">2024-01-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/12/test/" title="test">test</a><time datetime="2024-01-12T06:25:30.000Z" title="发表于 2024-01-12 14:25:30">2024-01-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/04/Reading-%E6%96%87%E5%8C%96%E8%BE%93%E5%87%BA%E8%AE%BA/" title="Reading-文化输出论">Reading-文化输出论</a><time datetime="2023-08-04T05:33:44.000Z" title="发表于 2023-08-04 13:33:44">2023-08-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/29/%E5%BF%83%E7%90%86%E5%AD%A6%C2%B7%E6%A2%A6%E7%9A%84%E8%A7%A3%E6%9E%90-%E5%BC%97%E6%B4%9B%E4%BC%8A%E5%BE%B7/" title="心理学-梦的解析·弗洛伊德">心理学-梦的解析·弗洛伊德</a><time datetime="2023-06-29T15:36:00.000Z" title="发表于 2023-06-29 23:36:00">2023-06-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By xdd</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Android/" class="print-no-link">#Android</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Android-从LayoutInflater.from(context)看源码</div>
+      <div>http://example.com/1979/11/30/Android-从LayoutInflater-from-context-看源码/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>xdd</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>1979年11月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/1979/11/30/Android-%E6%BA%90%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A16%E5%A4%A7%E5%8E%9F%E5%88%99/" title="Android-面向对象6大原则源码设计模式">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Android-面向对象6大原则源码设计模式</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/1979/11/30/English-%E6%89%BE%E5%AF%B9%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E6%B3%95%E7%9A%84%E7%AC%AC%E4%B8%80%E6%9C%AC%E4%B9%A6/" title="English-找对英语学习法第一本书">
+                        <span class="hidden-mobile">English-找对英语学习法第一本书</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
